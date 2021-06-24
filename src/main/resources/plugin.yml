@@ -1,0 +1,6 @@
+name: nJobs
+version: 1.0
+authors:
+  - NewZ_AZ#0001
+  - TarTini#9425
+main: fr.newzproject.njobs.JobsCore
