@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="[NewZ-Project] nJobs:jar">
+    <output-path>$USER_HOME$/OneDrive/Bureau/serveur/plugins</output-path>
+    <root id="archive" name="[NewZ-Project] nJobs.jar">
+      <element id="module-output" name="[NewZ-Project] nJobs" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/config.yml" />
+    </root>
+  </artifact>
+</component>

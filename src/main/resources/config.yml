@@ -1,0 +1,9 @@
+Agriculteur:
+  name: "&cAgriculteur"
+  maxLvl: 10
+Chasseur:
+  name: "&cChasseur"
+  maxLvl: 10
+Mineur:
+  name: "&aMineur"
+  maxLvl: 10
