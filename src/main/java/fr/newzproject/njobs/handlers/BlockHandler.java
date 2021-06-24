@@ -6,17 +6,22 @@ import fr.newzproject.njobs.jobs.Jobs;
 import fr.newzproject.njobs.jobs.JobsManager;
 import fr.newzproject.njobs.jobs.enums.JobsEnum;
 import fr.newzproject.njobs.jobs.enums.JobsXPEnum;
-import net.minecraft.server.v1_12_R1.ChatMessageType;
+import fr.newzproject.njobs.utils.Reflections;
 import net.minecraft.server.v1_12_R1.IChatBaseComponent;
 import net.minecraft.server.v1_12_R1.PacketPlayOutChat;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 
 public class BlockHandler {
 
@@ -47,7 +52,7 @@ public class BlockHandler {
             Jobs jobs = new Jobs(player, jobsEnum);
             JobsManager jobsManager = new JobsManager(plugin,player);
             new JobsManager(plugin,player).addJobXp(jobsEnum, JobsXPEnum.getMaterialWorth(block.getType()));
-            sendActionbar(event.getPlayer(), "§a" + jobsEnum.getJobName() + ": " + jobsManager.getJobXp(jobsEnum) + "/" + JobsXPEnum.getXpForLevelup(jobs.getJobs()) + " (+" + JobsXPEnum.getMaterialWorth(event.getBlock().getType()) + ")");
+            sendActionBar(event.getPlayer(), "§a" + jobsEnum.getJobName() + ": " + jobsManager.getJobXp(jobsEnum) + "/" + JobsXPEnum.getXpForLevelup(jobs.getJobs()) + " (+" + JobsXPEnum.getMaterialWorth(event.getBlock().getType()) + ")");
 
         }else {
             if(JobsXPEnum.getMaterialData(event.getBlock().getType()) != event.getBlock().getData())return;
@@ -56,13 +61,14 @@ public class BlockHandler {
             Jobs jobs = new Jobs(player, jobsEnum);
             JobsManager jobsManager = new JobsManager(plugin,player);
             jobsManager.addJobXp(jobsEnum,JobsXPEnum.getMaterialWorth(event.getBlock().getType()));
-            sendActionbar(event.getPlayer(), "§a" + jobsEnum.getJobName() + ": " + jobsManager.getJobXp(jobsEnum) + "/" + JobsXPEnum.getXpForLevelup(jobs.getJobs()) + " (+" + JobsXPEnum.getMaterialWorth(event.getBlock().getType()) + ")");
+            sendActionBar(event.getPlayer(), "§a" + jobsEnum.getJobName() + ": " + jobsManager.getJobXp(jobsEnum) + "/" + JobsXPEnum.getXpForLevelup(jobs.getJobs()) + " (+" + JobsXPEnum.getMaterialWorth(event.getBlock().getType()) + ")");
         }
     }
 
-    public void sendActionbar(Player player, String message) {
-        IChatBaseComponent icbc = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + message + "\"}");
-        PacketPlayOutChat packet = new PacketPlayOutChat(icbc, ChatMessageType.GAME_INFO);
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+    private void sendActionBar(Player p, String message){
+        Object text = Reflections.OBJECTS.getObject(Reflections.NMS.getClass("ChatComponentText"), ChatColor.translateAlternateColorCodes('&', message));
+        Object object = Reflections.OBJECTS.getObject(Reflections.NMS.getClass("PacketPlayOutChat"),text ,(byte)2);
+        Reflections.METHODS.invoke(Reflections.FIELDS.getValue(Reflections.METHODS.invoke(p, "getHandle"), "playerConnection"), "sendPacket", object);
     }
+
 }

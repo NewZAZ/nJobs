@@ -1,0 +1,91 @@
+Agriculteur:
+  MELON_BLOCK:
+    xp: 10
+  CARROT:
+    xp: 5
+  POTATO:
+    xp: 5
+  PUMPKIN:
+    xp: 10
+  CACTUS:
+    xp: 2
+  SUGAR_CANE:
+    xp: 2
+  WHEAT:
+    xp: 8
+  COCOA:
+    xp: 7
+  NETHER_WARTS:
+    xp: 9
+
+Chasseur:
+  SPIDER:
+    xp: 10
+  CAVE_SPIDER:
+    xp: 5
+  ENDERMAN:
+    xp: 5
+  PIG_ZOMBIE:
+    xp: 10
+  BLAZE:
+    xp: 2
+  CREEPER:
+    xp: 2
+  MAGMA_CUBE:
+    xp: 8
+  SKELETON:
+    xp: 7
+  SLIME:
+    xp: 9
+  WITCH:
+    xp: 10
+  ZOMBIE_VILLAGER:
+    xp: 5
+  GUARDIAN:
+    xp: 5
+  GHAST:
+    xp: 10
+  WITHER_SKELETON:
+    xp: 2
+  ZOMBIE:
+    xp: 2
+  PIG:
+    xp: 8
+  CHICKEN:
+    xp: 7
+  COW:
+    xp: 9
+  HORSE:
+    xp: 5
+  LLAMA:
+    xp: 5
+  POLAR_BEAR:
+    xp: 10
+  RABBIT:
+    xp: 2
+  SHEEP:
+    xp: 2
+  SQUID:
+    xp: 8
+  WOLF:
+    xp: 7
+
+Mineur:
+  STONE:
+    xp: 1
+  COAL:
+    xp: 2
+  IRON:
+    xp: 5
+  GOLD:
+    xp: 7
+  REDSTONE:
+    xp: 4
+  LAPIS:
+    xp: 4
+  DIAMOND:
+    xp: 15
+  EMERALD:
+    xp: 18
+  QUARTZ:
+    xp: 2

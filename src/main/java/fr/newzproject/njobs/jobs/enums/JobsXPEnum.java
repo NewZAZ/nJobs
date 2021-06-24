@@ -1,56 +1,59 @@
 package fr.newzproject.njobs.jobs.enums;
 
+import fr.newzproject.njobs.JobsCore;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+import sun.applet.Main;
 
 public enum JobsXPEnum {
-    MELON_BLOCK(JobsEnum.AGRICULTEUR,2,Material.MELON_BLOCK),
-    CARROT(JobsEnum.AGRICULTEUR,2,Material.CARROT, (byte) 7),
-    POTATO(JobsEnum.AGRICULTEUR,2,Material.POTATO,(byte) 7),
-    PUMPKIN(JobsEnum.AGRICULTEUR,2,Material.PUMPKIN),
-    CACTUS(JobsEnum.AGRICULTEUR,1,Material.CACTUS),
-    SUGAR_CANE(JobsEnum.AGRICULTEUR,1,Material.SUGAR_CANE_BLOCK),
-    WHEAT(JobsEnum.AGRICULTEUR,3,Material.CROPS,(byte)7),
-    COCAO(JobsEnum.AGRICULTEUR,3,Material.COCOA,(byte) 7),
-    NETHER_WARTS(JobsEnum.AGRICULTEUR,3,Material.NETHER_WARTS,(byte) 7),
+    MELON_BLOCK(JobsEnum.AGRICULTEUR,getXP("Agriculteur","MELON_BLOCK"),Material.MELON_BLOCK),
+    CARROT(JobsEnum.AGRICULTEUR,getXP("Agriculteur","CARROT"),Material.CARROT, (byte) 7),
+    POTATO(JobsEnum.AGRICULTEUR,getXP("Agriculteur","POTATO"),Material.POTATO,(byte) 7),
+    PUMPKIN(JobsEnum.AGRICULTEUR,getXP("Agriculteur","PUMPKIN"),Material.PUMPKIN),
+    CACTUS(JobsEnum.AGRICULTEUR,getXP("Agriculteur","CACTUS"),Material.CACTUS),
+    SUGAR_CANE(JobsEnum.AGRICULTEUR,getXP("Agriculteur","SUGAR_CANE_BLOCK"),Material.SUGAR_CANE_BLOCK),
+    WHEAT(JobsEnum.AGRICULTEUR,getXP("Agriculteur","CROPS"),Material.CROPS,(byte)7),
+    COCAO(JobsEnum.AGRICULTEUR,getXP("Agriculteur","COCOA"),Material.COCOA,(byte) 7),
+    NETHER_WARTS(JobsEnum.AGRICULTEUR,getXP("Agriculteur","NETHER_WARTS"),Material.NETHER_WARTS,(byte) 7),
 
-    SPIDER(JobsEnum.CHASSEUR,3, EntityType.SPIDER),
-    CAVE_SPIDER(JobsEnum.CHASSEUR,3, EntityType.CAVE_SPIDER),
-    ENDERMAN(JobsEnum.CHASSEUR,15, EntityType.ENDERMAN),
-    PIG_ZOMBIE(JobsEnum.CHASSEUR,5, EntityType.PIG_ZOMBIE),
-    BLAZE(JobsEnum.CHASSEUR,5, EntityType.BLAZE),
-    CREEPER(JobsEnum.CHASSEUR,2, EntityType.CREEPER),
-    MAGMA_CUBE(JobsEnum.CHASSEUR,4, EntityType.MAGMA_CUBE),
-    SKELETON(JobsEnum.CHASSEUR,1, EntityType.SKELETON),
-    SLIME(JobsEnum.CHASSEUR,4, EntityType.SLIME),
-    WITCH(JobsEnum.CHASSEUR,3, EntityType.WITCH),
-    ZOMBIE_VILLAGER(JobsEnum.CHASSEUR,1, EntityType.ZOMBIE_VILLAGER),
-    GUARDIAN(JobsEnum.CHASSEUR,5, EntityType.GUARDIAN),
-    GHAST(JobsEnum.CHASSEUR,5, EntityType.GHAST),
-    WITHER_SKELETON(JobsEnum.CHASSEUR,25, EntityType.WITHER_SKELETON),
-    ZOMBIE(JobsEnum.CHASSEUR,1, EntityType.ZOMBIE),
-    PIG(JobsEnum.CHASSEUR,1, EntityType.PIG),
-    CHICKEN(JobsEnum.CHASSEUR,1, EntityType.CHICKEN),
-    COW(JobsEnum.CHASSEUR,1, EntityType.COW),
-    HORSE(JobsEnum.CHASSEUR,3, EntityType.HORSE),
-    LLAMA(JobsEnum.CHASSEUR,3, EntityType.LLAMA),
-    POLAR_BEAR(JobsEnum.CHASSEUR,5, EntityType.POLAR_BEAR),
-    RABBIT(JobsEnum.CHASSEUR,1, EntityType.RABBIT),
-    SHEEP(JobsEnum.CHASSEUR,1, EntityType.SHEEP),
-    SQUID(JobsEnum.CHASSEUR,5, EntityType.SQUID),
-    WOLF(JobsEnum.CHASSEUR,30, EntityType.WOLF),
-
-
+    SPIDER(JobsEnum.CHASSEUR,getXP("Chasseur","SPIDER"), EntityType.SPIDER),
+    CAVE_SPIDER(JobsEnum.CHASSEUR,getXP("Chasseur","CAVE_SPIDER"), EntityType.CAVE_SPIDER),
+    ENDERMAN(JobsEnum.CHASSEUR,getXP("Chasseur","ENDERMAN"), EntityType.ENDERMAN),
+    PIG_ZOMBIE(JobsEnum.CHASSEUR,getXP("Chasseur","PIG_ZOMBIE"), EntityType.PIG_ZOMBIE),
+    BLAZE(JobsEnum.CHASSEUR,getXP("Chasseur","BLAZE"), EntityType.BLAZE),
+    CREEPER(JobsEnum.CHASSEUR,getXP("Chasseur","CREEPER"), EntityType.CREEPER),
+    MAGMA_CUBE(JobsEnum.CHASSEUR,getXP("Chasseur","MAGMA_CUBE"), EntityType.MAGMA_CUBE),
+    SKELETON(JobsEnum.CHASSEUR,getXP("Chasseur","SKELETON"), EntityType.SKELETON),
+    SLIME(JobsEnum.CHASSEUR,getXP("Chasseur","SLIME"), EntityType.SLIME),
+    WITCH(JobsEnum.CHASSEUR,getXP("Chasseur","WITCH"), EntityType.WITCH),
+    ZOMBIE_VILLAGER(JobsEnum.CHASSEUR,getXP("Chasseur","ZOMBIE_VILLAGER"), EntityType.ZOMBIE_VILLAGER),
+    GUARDIAN(JobsEnum.CHASSEUR,getXP("Chasseur","GUARDIAN"), EntityType.GUARDIAN),
+    GHAST(JobsEnum.CHASSEUR,getXP("Chasseur","GHAST"), EntityType.GHAST),
+    WITHER_SKELETON(JobsEnum.CHASSEUR,getXP("Chasseur","WITHER_SKELETON"), EntityType.WITHER_SKELETON),
+    ZOMBIE(JobsEnum.CHASSEUR,getXP("Chasseur","ZOMBIE"), EntityType.ZOMBIE),
+    PIG(JobsEnum.CHASSEUR,getXP("Chasseur","PIG"), EntityType.PIG),
+    CHICKEN(JobsEnum.CHASSEUR,getXP("Chasseur","CHICKEN"), EntityType.CHICKEN),
+    COW(JobsEnum.CHASSEUR,getXP("Chasseur","COW"), EntityType.COW),
+    HORSE(JobsEnum.CHASSEUR,getXP("Chasseur","HORSE"), EntityType.HORSE),
+    LLAMA(JobsEnum.CHASSEUR,getXP("Chasseur","LLAMA"), EntityType.LLAMA),
+    POLAR_BEAR(JobsEnum.CHASSEUR,getXP("Chasseur","POLAR_BEAR"), EntityType.POLAR_BEAR),
+    RABBIT(JobsEnum.CHASSEUR,getXP("Chasseur","RABBIT"), EntityType.RABBIT),
+    SHEEP(JobsEnum.CHASSEUR,getXP("Chasseur","SHEEP"), EntityType.SHEEP),
+    SQUID(JobsEnum.CHASSEUR,getXP("Chasseur","SQUID"), EntityType.SQUID),
+    WOLF(JobsEnum.CHASSEUR,getXP("Chasseur","WOLF"), EntityType.WOLF),
 
 
-    STONE(JobsEnum.MINEUR,1,Material.STONE),
-    COAL(JobsEnum.MINEUR,2, Material.COAL_ORE),
-    IRON(JobsEnum.MINEUR,3, Material.IRON_ORE),
-    GOLD(JobsEnum.MINEUR,4, Material.GOLD_ORE),
-    REDSTONE(JobsEnum.MINEUR,5, Material.REDSTONE_ORE),
-    LAPIS(JobsEnum.MINEUR,6, Material.LAPIS_ORE),
-    DIAMOND(JobsEnum.MINEUR,7, Material.DIAMOND_ORE),
-    EMERALD(JobsEnum.MINEUR,8, Material.EMERALD_ORE);
+
+
+    STONE(JobsEnum.MINEUR,getXP("Mineur","STONE"),Material.STONE),
+    COAL(JobsEnum.MINEUR,getXP("Mineur","COAL_ORE"), Material.COAL_ORE),
+    IRON(JobsEnum.MINEUR,getXP("Mineur","IRON_ORE"), Material.IRON_ORE),
+    GOLD(JobsEnum.MINEUR,getXP("Mineur","GOLD_ORE"), Material.GOLD_ORE),
+    REDSTONE(JobsEnum.MINEUR,getXP("Mineur","REDSTONE_ORE"), Material.REDSTONE_ORE),
+    LAPIS(JobsEnum.MINEUR,getXP("Mineur","LAPIS_ORE"), Material.LAPIS_ORE),
+    DIAMOND(JobsEnum.MINEUR,getXP("Mineur","DIAMOND_ORE"), Material.DIAMOND_ORE),
+    EMERALD(JobsEnum.MINEUR,getXP("Mineur","EMERALD_ORE"), Material.EMERALD_ORE),
+    QUARTZ(JobsEnum.MINEUR,getXP("Mineur","QUARTZ"),Material.QUARTZ_ORE);
 
     final JobsEnum jobsEnum;
     final int worth;
@@ -75,6 +78,10 @@ public enum JobsXPEnum {
         this.jobsEnum = jobsEnum;
         this.worth = worth;
         this.entityType = entityType;
+    }
+
+    public static int getXP(String name, String what){
+        return JobsCore.getInstance().getFileConfiguration().getInt(name+"."+what+".xp");
     }
 
     public static int getXpForLevelup(JobsEnum eJobs){
