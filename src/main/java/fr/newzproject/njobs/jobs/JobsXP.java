@@ -4,7 +4,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
 public enum JobsXP {
-    STONE(Jobs.MINEUR, Material.STONE,1.0)
+    STONE(Jobs.MINEUR, Material.STONE,1.0),
+    COBBLESTONE(Jobs.MINEUR, Material.COBBLESTONE,1.2)
     ;
 
     final Jobs jobs;
