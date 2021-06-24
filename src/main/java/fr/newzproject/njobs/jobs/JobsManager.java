@@ -3,9 +3,11 @@ package fr.newzproject.njobs.jobs;
 import fr.newzproject.njobs.JobsCore;
 import fr.newzproject.njobs.jobs.enums.JobsEnum;
 import fr.newzproject.njobs.jobs.enums.JobsXPEnum;
+import fr.newzproject.njobs.storage.JsonStorage;
 import jdk.nashorn.internal.scripts.JO;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,10 +26,10 @@ public class JobsManager {
 
     public void init(){
         List<Jobs> jobs = new ArrayList<>();
-
-        jobs.add(new Jobs(player,JobsEnum.AGRICULTEUR));
-        jobs.add(new Jobs(player,JobsEnum.CHASSEUR));
-        jobs.add(new Jobs(player,JobsEnum.MINEUR));
+        JsonStorage storage = new JsonStorage();
+        jobs.add(storage.getJobs(player,JobsEnum.AGRICULTEUR));
+        jobs.add(storage.getJobs(player,JobsEnum.CHASSEUR));
+        jobs.add(storage.getJobs(player,JobsEnum.MINEUR));
         plugin.getPlayerJobs().put(player, jobs);
     }
 
@@ -89,12 +91,6 @@ public class JobsManager {
     }
 
     public void save(){
-        if(playerJobs.containsKey(player)){
-            for(Map.Entry<Player, List<Jobs>> entry : playerJobs.entrySet()){
-                for (Jobs job : entry.getValue()) {
-                    job.getJsonStorage().save(job);
-                }
-            }
-        }
+        new JsonStorage().saveJobs(player, playerJobs.get(player));
     }
 }

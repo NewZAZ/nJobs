@@ -9,23 +9,24 @@ import org.bukkit.entity.Player;
 import java.io.File;
 
 public class Jobs {
-    private final File file;
-    private final JsonStorage jsonStorage;
 
     private final Player player;
     private final JobsEnum jobsEnum;
-    private final Jobs jobs;
     private int xp;
     private int currentLvl;
 
     public Jobs(Player player, JobsEnum jobsEnum) {
-        this.file = new File("plugins/[EndSky] Jobs/dataPlayer/", player.getName() + ".json");
-        this.jsonStorage = new JsonStorage(file);
         this.player = player;
         this.jobsEnum = jobsEnum;
-        this.jobs = (Jobs) jsonStorage.getObject("jobs").get(jobsEnum.getJob());
-        this.xp = jobs.getXp();
-        this.currentLvl = jobs.getCurrentLvl();
+        this.xp = new JsonStorage().getJobs(player,jobsEnum).getXp();
+        this.currentLvl = new JsonStorage().getJobs(player,jobsEnum).getCurrentLvl();
+    }
+
+    public Jobs(Player player, JobsEnum jobsEnum, int xp, int currentLvl) {
+        this.player = player;
+        this.jobsEnum = jobsEnum;
+        this.xp = xp;
+        this.currentLvl = currentLvl;
     }
 
     public void setCurrentLvl(int lvl){
@@ -44,17 +45,6 @@ public class Jobs {
         return player;
     }
 
-    public boolean hasJobs(){
-        return jobs != null;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public JsonStorage getJsonStorage() {
-        return jsonStorage;
-    }
 
     public JobsEnum getJobs() {
         return jobsEnum;

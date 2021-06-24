@@ -1,106 +1,55 @@
 package fr.newzproject.njobs.storage;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import fr.newzproject.njobs.jobs.Jobs;
-import org.bukkit.ChatColor;
+import fr.newzproject.njobs.jobs.enums.JobsEnum;
+import fr.newzproject.njobs.storage.json.JSONReader;
+import fr.newzproject.njobs.storage.json.JSONWriter;
+import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.TreeMap;
+import java.util.List;
 
 public class JsonStorage {
-    private final File file;
-    private JSONObject json;
-    private final JSONParser parser = new JSONParser();
-    private final HashMap<String, Object> defaults = new HashMap<>();
 
-    public JsonStorage(File file) {
-        this.file = file;
-        reload();
+    private JSONReader jsonReader;
+    private JSONWriter jsonWriter;
+
+    public JsonStorage() {
+        this.jsonReader = new JSONReader();
+        this.jsonWriter = new JSONWriter();
     }
 
-    @SuppressWarnings("unchecked")
-    public void reload() {
-        try {
-            if (!file.getParentFile().exists()) {
-                file.getParentFile().mkdirs();
-            }
-            if (!file.exists()) {
-                PrintWriter pw = new PrintWriter(file, "UTF-8");
-                pw.print("{");
-                pw.print("}");
-                pw.flush();
-                pw.close();
-            }
-            json = (JSONObject) parser.parse(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    public Jobs getJobs(Player player, JobsEnum jobsEnum){
+        final JSONArray array = jsonReader.readFile(new File("plugins//nJobs//jobData//" + player.getName() + ".json"));
+        if(array == null){
+            return new Jobs(player,jobsEnum,0,0);
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void save(Jobs jobs) {
-        try {
-            JSONObject toSave = new JSONObject();
-
-            toSave.put("Jobs",jobs);
-
-            TreeMap<String, Object> treeMap = new TreeMap<String, Object>(String.CASE_INSENSITIVE_ORDER);
-            treeMap.putAll(toSave);
-
-            Gson g = new GsonBuilder().setPrettyPrinting().create();
-            String prettyJsonString = g.toJson(treeMap);
-
-            FileWriter fw = new FileWriter(file);
-            fw.write(prettyJsonString);
-            fw.flush();
-            fw.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        final JSONObject jobjPlayer = (JSONObject) array.get(0);
+        final JSONObject jobjJob = (JSONObject) jobjPlayer.get("jobs");
+        if(jobjJob == null || jobjPlayer.get(player) == null || jobjJob.get("["+jobsEnum.getJob()+".lvl]") == null){
+            return new Jobs(player,jobsEnum,0,0);
         }
+        Jobs jobs = new Jobs(player,jobsEnum);
+
+        jobs.setCurrentLvl(Integer.parseInt(String.valueOf(jobjJob.get("["+jobsEnum.getJob()+".lvl]"))));
+        jobs.setXp(Integer.parseInt(String.valueOf(jobjJob.get("["+jobsEnum.getJob()+".xp]"))));
+
+        return jobs;
     }
 
-    public String getRawData(String key) {
-        return json.containsKey(key) ? json.get(key).toString()
-                : (defaults.containsKey(key) ? defaults.get(key).toString() : key);
-    }
+    public void saveJobs(Player player, List<Jobs> jobsList){
+        for(Jobs jobs : jobsList) {
+            final JSONObject objPlayer = new JSONObject();
+            final JSONObject objStats = new JSONObject();
+            objStats.put("[" + jobs.getJobs().getJob() + ".lvl]", jobs.getCurrentLvl());
+            objStats.put("[" + jobs.getJobs().getJob() + ".xp]", jobs.getXp());
 
-    public String getString(String key) {
-        return ChatColor.translateAlternateColorCodes('&', getRawData(key));
-    }
-
-    public boolean getBoolean(String key) {
-        return Boolean.parseBoolean(getRawData(key));
-    }
-
-    public double getDouble(String key) {
-        try {
-            return Double.parseDouble(getRawData(key));
-        } catch (Exception ignored) { }
-        return -1;
-    }
-
-    public int getInteger(String key) {
-        try {
-            return Integer.parseInt(getRawData(key));
-        } catch (Exception ignored) { }
-        return -1;
-    }
-
-    public JSONObject getObject(String key) {
-        return json.containsKey(key) ? (JSONObject) json.get(key)
-                : (defaults.containsKey(key) ? (JSONObject) defaults.get(key) : new JSONObject());
-    }
-
-    public JSONArray getArray(String key) {
-        return json.containsKey(key) ? (JSONArray) json.get(key)
-                : (defaults.containsKey(key) ? (JSONArray) defaults.get(key) : new JSONArray());
+            objPlayer.put("jobs", objStats);
+            this.jsonWriter.addObject(objPlayer);
+            new File("plugins//nJobs//jobData//").mkdirs();
+            this.jsonWriter.writeFile(new File("plugins//nJobs//jobData//" + player.getPlayer().getName() + ".json"));
+        }
     }
 }
