@@ -1,6 +1,7 @@
 package fr.newzproject.njobs.jobs.enums;
 
 import fr.newzproject.njobs.JobsCore;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 public enum JobsEnum {
@@ -18,6 +19,7 @@ public enum JobsEnum {
         this.jobName = jobName;
         this.currentLvl = currentLvl;
         this.maxLvl = maxLvl;
+
     }
 
     private static String getJobName(String job){

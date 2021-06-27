@@ -32,7 +32,7 @@ public class BlockHandler {
         if(SuperiorSkyblockAPI.getIslandAt(location) == null)return;
         if(!SuperiorSkyblockAPI.getPlayer(player).hasIsland())return;
         if(SuperiorSkyblockAPI.getPlayer(player).getIsland() != SuperiorSkyblockAPI.getIslandAt(location))return;
-
+        JobsManager jobsManager = new JobsManager(plugin,player);
         if(block.hasMetadata(player.getUniqueId().toString())){
             block.removeMetadata(player.getUniqueId().toString(),plugin);
             return;
@@ -42,8 +42,9 @@ public class BlockHandler {
             JobsEnum jobsEnum = JobsXPEnum.getMaterialJobs(block.getType());
 
             if(jobsEnum == null)return;
-            Jobs jobs = new Jobs(player, jobsEnum);
-            JobsManager jobsManager = new JobsManager(plugin,player);
+
+
+            Jobs jobs = jobsManager.getJob(jobsEnum);
             new JobsManager(plugin,player).addJobXp(jobsEnum, JobsXPEnum.getMaterialWorth(block.getType()));
             reflections.sendActionBar(event.getPlayer(), "§a" + jobsEnum.getJobName() + ": " + jobsManager.getJobXp(jobsEnum) + "/" + JobsXPEnum.getXpForLevelup(jobs) + " (+" + JobsXPEnum.getMaterialWorth(event.getBlock().getType()) + ")");
 
@@ -51,8 +52,7 @@ public class BlockHandler {
             if(JobsXPEnum.getMaterialData(event.getBlock().getType()) != event.getBlock().getData())return;
             JobsEnum jobsEnum = JobsXPEnum.getMaterialJobs(event.getBlock().getType());
             if (jobsEnum == null) return;
-            Jobs jobs = new Jobs(player, jobsEnum);
-            JobsManager jobsManager = new JobsManager(plugin,player);
+            Jobs jobs = jobsManager.getJob(jobsEnum);
             jobsManager.addJobXp(jobsEnum,JobsXPEnum.getMaterialWorth(event.getBlock().getType()));
             reflections.sendActionBar(event.getPlayer(), "§a" + jobsEnum.getJobName() + ": " + jobsManager.getJobXp(jobsEnum) + "/" + JobsXPEnum.getXpForLevelup(jobs) + " (+" + JobsXPEnum.getMaterialWorth(event.getBlock().getType()) + ")");
         }

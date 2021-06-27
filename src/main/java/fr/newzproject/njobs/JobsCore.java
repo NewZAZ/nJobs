@@ -4,8 +4,12 @@ import com.bgsoftware.superiorskyblock.api.SuperiorSkyblock;
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 import fr.newzproject.api.MainApi;
 import fr.newzproject.njobs.jobs.Jobs;
+import fr.newzproject.njobs.jobs.JobsManager;
+import fr.newzproject.njobs.jobs.JobsRewards;
 import fr.newzproject.njobs.jobs.enums.JobsEnum;
 import fr.newzproject.njobs.listeners.BlockListeners;
+import fr.newzproject.njobs.listeners.EntityListeners;
+import fr.newzproject.njobs.listeners.JobListeners;
 import fr.newzproject.njobs.listeners.PlayerListeners;
 import fr.newzproject.njobs.utils.AbstractCommand;
 import org.bukkit.Bukkit;
@@ -25,6 +29,7 @@ public class JobsCore extends JavaPlugin {
 
     private static JobsCore instance;
     private final HashMap<Player, List<Jobs>> playerJobs = new HashMap<>();
+    private JobsRewards jobsRewards;
 
     private final File file = new File("plugins/nJobs","worth.yml");
     private final FileConfiguration fileConfiguration = YamlConfiguration.loadConfiguration(file);
@@ -32,6 +37,8 @@ public class JobsCore extends JavaPlugin {
     public void onEnable() {
         instance = this;
         MainApi.setup(this);
+        jobsRewards = new JobsRewards();
+        jobsRewards.initRewards();
         try {
             initWorthFile();
         } catch (IOException e) {
@@ -39,14 +46,22 @@ public class JobsCore extends JavaPlugin {
         }
         saveDefaultConfig();
         AbstractCommand.registerCommands(this);
-        registerListeners(new BlockListeners(this),new PlayerListeners(this));
+        registerListeners(new BlockListeners(this),new PlayerListeners(this), new JobListeners(), new EntityListeners(this));
     }
 
     private void registerListeners(Listener...listeners){
         Arrays.stream(listeners).iterator().forEachRemaining(listener -> Bukkit.getPluginManager().registerEvents(listener,this));
     }
 
+    @Override
+    public void onDisable() {
+        for(Player player : Bukkit.getOnlinePlayers()){
+            new JobsManager(this,player).save();
+        }
+    }
+
     public void initWorthFile() throws IOException {
+        if(file.exists())return;
         fileConfiguration.set("Agriculteur.MELON_BLOCK.xp",10);
         fileConfiguration.set("Agriculteur.CARROT.xp",10);
         fileConfiguration.set("Agriculteur.POTATO.xp",10);
@@ -90,6 +105,10 @@ public class JobsCore extends JavaPlugin {
         fileConfiguration.set("Mineur.EMERALD.xp",10);
         fileConfiguration.set("Mineur.QUARTZ.xp",10);
         fileConfiguration.save(file);
+    }
+
+    public JobsRewards getJobsRewards() {
+        return jobsRewards;
     }
 
     public static JobsCore getInstance() {

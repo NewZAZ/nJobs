@@ -11,7 +11,7 @@ public class JSONWriter {
     JSONArray objects;
 
     public JSONWriter() {
-        (this.objects = new JSONArray()).clear();
+        this.objects = new JSONArray();
     }
 
     public void addObject(final JSONObject obj) {

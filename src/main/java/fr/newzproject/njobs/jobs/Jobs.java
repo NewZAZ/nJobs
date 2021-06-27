@@ -15,12 +15,6 @@ public class Jobs {
     private int xp;
     private int currentLvl;
 
-    public Jobs(Player player, JobsEnum jobsEnum) {
-        this.player = player;
-        this.jobsEnum = jobsEnum;
-        this.xp = new JsonStorage().getJobs(player,jobsEnum).getXp();
-        this.currentLvl = new JsonStorage().getJobs(player,jobsEnum).getCurrentLvl();
-    }
 
     public Jobs(Player player, JobsEnum jobsEnum, int xp, int currentLvl) {
         this.player = player;

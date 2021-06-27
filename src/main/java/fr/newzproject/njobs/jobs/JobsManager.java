@@ -1,10 +1,12 @@
 package fr.newzproject.njobs.jobs;
 
 import fr.newzproject.njobs.JobsCore;
+import fr.newzproject.njobs.custom.JobLevelupEvent;
 import fr.newzproject.njobs.jobs.enums.JobsEnum;
 import fr.newzproject.njobs.jobs.enums.JobsXPEnum;
 import fr.newzproject.njobs.storage.JsonStorage;
 import jdk.nashorn.internal.scripts.JO;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -83,6 +85,7 @@ public class JobsManager {
             job.setXp(job.getXp() - JobsXPEnum.getXpForLevelup(job));
             job.setCurrentLvl(job.getCurrentLvl() +1);
             playerJobs.get(player).set(indexOfJob(jobs), job);
+            Bukkit.getPluginManager().callEvent(new JobLevelupEvent(player,jobs,plugin.getJobsRewards().getRewards(jobs,job.getCurrentLvl()),job.getCurrentLvl(),job.getCurrentLvl() +1));
         }
     }
 
@@ -92,5 +95,6 @@ public class JobsManager {
 
     public void save(){
         new JsonStorage().saveJobs(player, playerJobs.get(player));
+
     }
 }

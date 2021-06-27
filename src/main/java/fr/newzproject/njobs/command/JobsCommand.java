@@ -45,6 +45,8 @@ public class JobsCommand extends AbstractCommand {
             jobInventory.setItem(17, ClickableItem.empty(new ItemBuilder(Material.STAINED_GLASS_PANE).setDisplayName("").setDurability((short) 4).build()));
             jobInventory.setItem(25, ClickableItem.empty(new ItemBuilder(Material.STAINED_GLASS_PANE).setDisplayName("").setDurability((short) 4).build()));
             jobInventory.setItem(26, ClickableItem.empty(new ItemBuilder(Material.STAINED_GLASS_PANE).setDisplayName("").setDurability((short) 4).build()));
+
+            jobInventory.open(player);
         }else if(args.length == 1){
             if(args[0].equalsIgnoreCase("help")){
                 if(player.hasPermission("nJobs.command.jobs.args.*")){

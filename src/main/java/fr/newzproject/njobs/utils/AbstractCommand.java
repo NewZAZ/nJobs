@@ -1,12 +1,15 @@
 package fr.newzproject.njobs.utils;
 
 import fr.newzproject.njobs.JobsCore;
+import fr.newzproject.njobs.command.JobsCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
 
 public abstract class AbstractCommand implements CommandExecutor {
 
@@ -32,8 +35,8 @@ public abstract class AbstractCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String str, String[] args) {
-        if (!cmd.getLabel().equalsIgnoreCase(commandName))
-            return true;
+        /*if (!cmd.getLabel().equalsIgnoreCase(commandName))
+            return true;*/
         if (permission != null && !sender.hasPermission(permission)) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.utils.notHavePermission")));
             return true;
@@ -48,5 +51,6 @@ public abstract class AbstractCommand implements CommandExecutor {
 
     public static void registerCommands(JobsCore core) {
         plugin = core;
+        new JobsCommand(core);
     }
 }
