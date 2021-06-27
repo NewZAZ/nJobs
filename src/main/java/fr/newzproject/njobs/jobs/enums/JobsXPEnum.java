@@ -1,6 +1,7 @@
 package fr.newzproject.njobs.jobs.enums;
 
 import fr.newzproject.njobs.JobsCore;
+import fr.newzproject.njobs.jobs.Jobs;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import sun.applet.Main;
@@ -84,7 +85,7 @@ public enum JobsXPEnum {
         return JobsCore.getInstance().getFileConfiguration().getInt(name+"."+what+".xp");
     }
 
-    public static int getXpForLevelup(JobsEnum eJobs){
+    public static int getXpForLevelup(Jobs eJobs){
         return (int) (1000 * Math.pow(1.025, eJobs.getCurrentLvl()));
     }
 

@@ -2,6 +2,7 @@ package fr.newzproject.njobs;
 
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblock;
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
+import fr.newzproject.api.MainApi;
 import fr.newzproject.njobs.jobs.Jobs;
 import fr.newzproject.njobs.jobs.enums.JobsEnum;
 import fr.newzproject.njobs.listeners.BlockListeners;
@@ -30,6 +31,7 @@ public class JobsCore extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        MainApi.setup(this);
         try {
             initWorthFile();
         } catch (IOException e) {

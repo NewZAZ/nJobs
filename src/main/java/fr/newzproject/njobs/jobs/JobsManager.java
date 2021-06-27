@@ -80,14 +80,14 @@ public class JobsManager {
     public void levelupJobs(JobsEnum jobs){
         if (getJob(jobs) != null) {
             Jobs job = getJob(jobs);
-            job.setXp(job.getXp() - JobsXPEnum.getXpForLevelup(jobs));
+            job.setXp(job.getXp() - JobsXPEnum.getXpForLevelup(job));
             job.setCurrentLvl(job.getCurrentLvl() +1);
             playerJobs.get(player).set(indexOfJob(jobs), job);
         }
     }
 
     public boolean canLevelup(JobsEnum jobs){
-        return getJob(jobs) != null && getJob(jobs).getXp() >= JobsXPEnum.getXpForLevelup(jobs);
+        return getJob(jobs) != null && getJob(jobs).getXp() >= JobsXPEnum.getXpForLevelup(getJob(jobs));
     }
 
     public void save(){
