@@ -38,9 +38,9 @@ public class JobsCommand extends AbstractCommand {
             Jobs mineur = new JobsManager(plugin,player).getJob(JobsEnum.MINEUR);
             Jobs agriculteur = new JobsManager(plugin,player).getJob(JobsEnum.AGRICULTEUR);
             Jobs chasseur = new JobsManager(plugin,player).getJob(JobsEnum.CHASSEUR);
-            jobInventory.setItem(11, ClickableItem.empty(new ItemBuilder(Material.DIAMOND_PICKAXE).setDisplayName("§9Mineur").setLoreWithList(Arrays.asList("§9Niveau : "+mineur.getCurrentLvl(),"§9Xp: "+mineur.getXp()+"/"+ JobsXPEnum.getXpForLevelup(mineur))).build()));
-            jobInventory.setItem(13, ClickableItem.empty(new ItemBuilder(Material.GOLD_HOE).setDisplayName("§aAgriculteur").setLoreWithList(Arrays.asList("§aNiveau : "+agriculteur.getCurrentLvl(),"§aXp: "+agriculteur.getXp()+"/"+ JobsXPEnum.getXpForLevelup(agriculteur))).build()));
-            jobInventory.setItem(15, ClickableItem.empty(new ItemBuilder(Material.DIAMOND_SWORD).setDisplayName("§cChasseur").setLoreWithList(Arrays.asList("§cNiveau : "+chasseur.getCurrentLvl(),"§cXp: "+chasseur.getXp()+"/"+ JobsXPEnum.getXpForLevelup(chasseur))).build()));
+            jobInventory.setItem(11, ClickableItem.empty(new ItemBuilder(Material.DIAMOND_PICKAXE).setDisplayName("§9Mineur").setLoreWithList(Arrays.asList("§9Niveau : "+mineur.getCurrentLvl()+"/"+mineur.getMaxLvl(),"§9Xp: "+mineur.getXp()+"/"+ JobsXPEnum.getXpForLevelup(mineur))).build()));
+            jobInventory.setItem(13, ClickableItem.empty(new ItemBuilder(Material.GOLD_HOE).setDisplayName("§aAgriculteur").setLoreWithList(Arrays.asList("§aNiveau : "+agriculteur.getCurrentLvl()+"/"+agriculteur.getMaxLvl(),"§aXp: "+agriculteur.getXp()+"/"+ JobsXPEnum.getXpForLevelup(agriculteur))).build()));
+            jobInventory.setItem(15, ClickableItem.empty(new ItemBuilder(Material.DIAMOND_SWORD).setDisplayName("§cChasseur").setLoreWithList(Arrays.asList("§cNiveau : "+chasseur.getCurrentLvl()+"/"+chasseur.getMaxLvl(),"§cXp: "+chasseur.getXp()+"/"+ JobsXPEnum.getXpForLevelup(chasseur))).build()));
 
             jobInventory.setItem(17, ClickableItem.empty(new ItemBuilder(Material.STAINED_GLASS_PANE).setDisplayName("").setDurability((short) 4).build()));
             jobInventory.setItem(25, ClickableItem.empty(new ItemBuilder(Material.STAINED_GLASS_PANE).setDisplayName("").setDurability((short) 4).build()));

@@ -46,7 +46,7 @@ public class BlockHandler {
 
             Jobs jobs = jobsManager.getJob(jobsEnum);
             new JobsManager(plugin,player).addJobXp(jobsEnum, JobsXPEnum.getMaterialWorth(block.getType()));
-            reflections.sendActionBar(event.getPlayer(), "§a" + jobsEnum.getJobName() + ": " + jobsManager.getJobXp(jobsEnum) + "/" + JobsXPEnum.getXpForLevelup(jobs) + " (+" + JobsXPEnum.getMaterialWorth(event.getBlock().getType()) + ")");
+            reflections.sendActionBar(event.getPlayer(), ChatColor.translateAlternateColorCodes('&',plugin.actionBarMessage.replace("{job_name}",jobsEnum.getJobName()).replace("{job_xp}",String.valueOf(jobsManager.getJobXp(jobsEnum))).replace("{cost_for_levelup}",String.valueOf(JobsXPEnum.getXpForLevelup(jobs)).replace("{xp}",String.valueOf(JobsXPEnum.getMaterialWorth(block.getType()))))));
 
         }else {
             if(JobsXPEnum.getMaterialData(event.getBlock().getType()) != event.getBlock().getData())return;
@@ -54,7 +54,7 @@ public class BlockHandler {
             if (jobsEnum == null) return;
             Jobs jobs = jobsManager.getJob(jobsEnum);
             jobsManager.addJobXp(jobsEnum,JobsXPEnum.getMaterialWorth(event.getBlock().getType()));
-            reflections.sendActionBar(event.getPlayer(), "§a" + jobsEnum.getJobName() + ": " + jobsManager.getJobXp(jobsEnum) + "/" + JobsXPEnum.getXpForLevelup(jobs) + " (+" + JobsXPEnum.getMaterialWorth(event.getBlock().getType()) + ")");
+            reflections.sendActionBar(event.getPlayer(), ChatColor.translateAlternateColorCodes('&',plugin.actionBarMessage.replace("{job_name}",jobsEnum.getJobName()).replace("{job_xp}",String.valueOf(jobsManager.getJobXp(jobsEnum))).replace("{cost_for_levelup}",String.valueOf(JobsXPEnum.getXpForLevelup(jobs)).replace("{xp}",String.valueOf(JobsXPEnum.getMaterialWorth(block.getType()))))));
         }
     }
 

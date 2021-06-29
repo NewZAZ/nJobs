@@ -15,7 +15,7 @@ public enum JobsXPEnum {
     SUGAR_CANE(JobsEnum.AGRICULTEUR,getXP("Agriculteur","SUGAR_CANE_BLOCK"),Material.SUGAR_CANE_BLOCK),
     WHEAT(JobsEnum.AGRICULTEUR,getXP("Agriculteur","CROPS"),Material.CROPS,(byte)7),
     COCAO(JobsEnum.AGRICULTEUR,getXP("Agriculteur","COCOA"),Material.COCOA,(byte) 7),
-    NETHER_WARTS(JobsEnum.AGRICULTEUR,getXP("Agriculteur","NETHER_WARTS"),Material.NETHER_WARTS,(byte) 7),
+    NETHER_WARTS(JobsEnum.AGRICULTEUR,getXP("Agriculteur","NETHER_WARTS"),Material.NETHER_WARTS,(byte) 3),
 
     SPIDER(JobsEnum.CHASSEUR,getXP("Chasseur","SPIDER"), EntityType.SPIDER),
     CAVE_SPIDER(JobsEnum.CHASSEUR,getXP("Chasseur","CAVE_SPIDER"), EntityType.CAVE_SPIDER),
@@ -86,7 +86,7 @@ public enum JobsXPEnum {
     }
 
     public static int getXpForLevelup(Jobs eJobs){
-        return (int) (1000 * Math.pow(1.025, eJobs.getCurrentLvl()));
+        return (int) (JobsCore.getInstance().priceBase.get(eJobs.getJobs()) * Math.pow(JobsCore.getInstance().priceMulti.get(eJobs.getJobs()), eJobs.getCurrentLvl()));
     }
 
     public static JobsEnum getMaterialJobs(Material material){

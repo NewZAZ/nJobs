@@ -1,12 +1,7 @@
 package fr.newzproject.njobs.jobs;
 
 import fr.newzproject.njobs.jobs.enums.JobsEnum;
-import fr.newzproject.njobs.storage.JsonStorage;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
-import java.io.File;
 
 public class Jobs {
 
@@ -42,6 +37,10 @@ public class Jobs {
 
     public JobsEnum getJobs() {
         return jobsEnum;
+    }
+
+    public int getMaxLvl(){
+        return jobsEnum.getMaxLvl();
     }
 
     public int getCurrentLvl() {

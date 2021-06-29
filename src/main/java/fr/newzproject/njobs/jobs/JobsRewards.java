@@ -21,13 +21,17 @@ public class JobsRewards {
     private final HashMap<JobsEnum, HashMap<Integer, String>> jobsRewardHashMap = new HashMap<>();
 
     public void initRewards(){
+        if(!file.exists()){
+            configuration.set("Mineur.1.cmd","give {player} diamond 1");
+            configuration.set("Chasseur.1.cmd","give {player} diamond 1");
+            configuration.set("Agriculteur.1.cmd","give {player} diamond 1");
+        }
         try {
             configuration.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
         for(String key : configuration.getKeys(true)){
-            System.out.println(key);
             if(key.contains("Mineur")){
 
                 String[] keys = key.split("\\.");
@@ -37,8 +41,6 @@ public class JobsRewards {
                         HashMap<Integer, String> reward = new HashMap<>();
                         reward.put(Integer.parseInt(keys[1]), getCmd(keys[0], Integer.parseInt(keys[1])));
                         jobsRewardHashMap.putIfAbsent(JobsEnum.MINEUR, reward);
-                        System.out.println("good");
-                        System.out.println(getCmd(keys[0], Integer.parseInt(keys[1])));
                     }
                 }
             }else if(key.contains("Chasseur")){
@@ -49,8 +51,6 @@ public class JobsRewards {
                         HashMap<Integer, String> reward = new HashMap<>();
                         reward.put(Integer.parseInt(keys[1]), getCmd(keys[0], Integer.parseInt(keys[1])));
                         jobsRewardHashMap.putIfAbsent(JobsEnum.CHASSEUR, reward);
-                        System.out.println("good");
-                        System.out.println(getCmd(keys[0], Integer.parseInt(keys[1])));
                     }
                 }
             }else if(key.contains("Agriculteur")){
@@ -61,8 +61,6 @@ public class JobsRewards {
                         HashMap<Integer, String> reward = new HashMap<>();
                         reward.put(Integer.parseInt(keys[1]), getCmd(keys[0], Integer.parseInt(keys[1])));
                         jobsRewardHashMap.putIfAbsent(JobsEnum.AGRICULTEUR, reward);
-                        System.out.println("good");
-                        System.out.println(getCmd(keys[0], Integer.parseInt(keys[1])));
                     }
                 }
             }

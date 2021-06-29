@@ -1,8 +1,7 @@
 package fr.newzproject.njobs;
 
-import com.bgsoftware.superiorskyblock.api.SuperiorSkyblock;
-import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 import fr.newzproject.api.MainApi;
+import fr.newzproject.api.utils.AdvancedLicense;
 import fr.newzproject.njobs.jobs.Jobs;
 import fr.newzproject.njobs.jobs.JobsManager;
 import fr.newzproject.njobs.jobs.JobsRewards;
@@ -19,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.crypto.Cipher;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,20 +33,41 @@ public class JobsCore extends JavaPlugin {
 
     private final File file = new File("plugins/nJobs","worth.yml");
     private final FileConfiguration fileConfiguration = YamlConfiguration.loadConfiguration(file);
+
+    public HashMap<JobsEnum, Double> priceBase = new HashMap<>();
+    public HashMap<JobsEnum, Double> priceMulti = new HashMap<>();
+
+    public String actionBarMessage;
+    AdvancedLicense.ValidationType vt = new AdvancedLicense(getConfig().getString("License"),getWebSite(), this).setSecurityKey("OoOZEOIoIOKIEOAij45AZEAds5UHHaeL4451").isValid();
     @Override
     public void onEnable() {
-        instance = this;
-        MainApi.setup(this);
-        jobsRewards = new JobsRewards();
-        jobsRewards.initRewards();
-        try {
-            initWorthFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         saveDefaultConfig();
-        AbstractCommand.registerCommands(this);
-        registerListeners(new BlockListeners(this),new PlayerListeners(this), new JobListeners(), new EntityListeners(this));
+        if(vt == AdvancedLicense.ValidationType.KEY_NOT_FOUND){
+            System.out.println("\u001B[31mLicense key not found !\u001B[0m");
+            getServer().getPluginManager().disablePlugin(this);
+        }else if(vt == AdvancedLicense.ValidationType.NOT_VALID_IP){
+            System.out.println("\u001B[31mLicense key founded but it's not same ip !\u001B[0m");
+            getServer().getPluginManager().disablePlugin(this);
+        }else if(vt == AdvancedLicense.ValidationType.WRONG_RESPONSE){
+            System.out.println("\u001BERROR !\u001B[0m");
+            getServer().getPluginManager().disablePlugin(this);
+        }else if(vt == AdvancedLicense.ValidationType.VALID) {
+            instance = this;
+            MainApi.setup(this);
+            jobsRewards = new JobsRewards();
+            jobsRewards.initRewards();
+            try {
+                initWorthFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            initConfig();
+            AbstractCommand.registerCommands(this);
+            registerListeners(new BlockListeners(this), new PlayerListeners(this), new JobListeners(this), new EntityListeners(this));
+        }else {
+            System.out.println("\u001BERROR !\u001B[0m");
+            getServer().getPluginManager().disablePlugin(this);
+        }
     }
 
     private void registerListeners(Listener...listeners){
@@ -60,6 +81,21 @@ public class JobsCore extends JavaPlugin {
         }
     }
 
+    private void initConfig(){
+        priceBase.put(JobsEnum.CHASSEUR,getConfig().getDouble("Chasseur.priceBase"));
+        priceBase.put(JobsEnum.MINEUR,getConfig().getDouble("Mineur.priceBase"));
+        priceBase.put(JobsEnum.AGRICULTEUR,getConfig().getDouble("Agriculteur.priceBase"));
+
+        priceMulti.put(JobsEnum.CHASSEUR,getConfig().getDouble("Chasseur.priceMulti"));
+        priceMulti.put(JobsEnum.MINEUR,getConfig().getDouble("Mineur.priceMulti"));
+        priceMulti.put(JobsEnum.AGRICULTEUR,getConfig().getDouble("Agriculteur.priceMulti"));
+
+        actionBarMessage = getConfig().getString("messages.actionbar");
+    }
+
+    public String getWebSite(){
+        return "https://newz-project.000webhostapp.com/verify.php";
+    }
     public void initWorthFile() throws IOException {
         if(file.exists())return;
         fileConfiguration.set("Agriculteur.MELON_BLOCK.xp",10);
@@ -67,7 +103,7 @@ public class JobsCore extends JavaPlugin {
         fileConfiguration.set("Agriculteur.POTATO.xp",10);
         fileConfiguration.set("Agriculteur.PUMPKIN.xp",10);
         fileConfiguration.set("Agriculteur.CACTUS.xp",10);
-        fileConfiguration.set("Agriculteur.WHEAT.xp",10);
+        fileConfiguration.set("Agriculteur.CROPS.xp",10);
         fileConfiguration.set("Agriculteur.COCOA.xp",10);
         fileConfiguration.set("Agriculteur.NETHER_WARTS.xp",10);
         fileConfiguration.set("Chasseur.SPIDER.xp",10);

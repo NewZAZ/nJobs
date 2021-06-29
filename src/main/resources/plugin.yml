@@ -6,4 +6,3 @@ authors:
 main: fr.newzproject.njobs.JobsCore
 commands:
   jobs:
-    aliases: [Job,nJob]

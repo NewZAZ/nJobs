@@ -41,6 +41,7 @@ public class JobLevelupEvent extends Event {
     public int getNewLevel() {
         return newLevel;
     }
+
     public static HandlerList getHandlerList() {
         return handlers;
     }

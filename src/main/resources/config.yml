@@ -1,9 +1,22 @@
+License: "null"
 Agriculteur:
   name: "&cAgriculteur"
   maxLvl: 10
+  priceBase: 10250
+  priceMulti: 1.025
 Chasseur:
   name: "&cChasseur"
   maxLvl: 10
+  priceBase: 10250
+  priceMulti: 1.025
 Mineur:
   name: "&aMineur"
   maxLvl: 10
+  priceBase: 10250
+  priceMulti: 1.025
+messages:
+  utils:
+    instancePlayer: "&cYou are not a Player !"
+    notHavePermission: "&cYou don't have permission !"
+  actionbar: "&a{job_name} : {job_xp} / {cost_for_levelup} (+{xp})"
+  jobLevelup: "&dGG {player} you have levelup {job_name}"

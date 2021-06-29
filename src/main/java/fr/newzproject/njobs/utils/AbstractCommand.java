@@ -35,8 +35,8 @@ public abstract class AbstractCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String str, String[] args) {
-        /*if (!cmd.getLabel().equalsIgnoreCase(commandName))
-            return true;*/
+        if (!cmd.getLabel().equalsIgnoreCase(commandName))
+            return true;
         if (permission != null && !sender.hasPermission(permission)) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.utils.notHavePermission")));
             return true;

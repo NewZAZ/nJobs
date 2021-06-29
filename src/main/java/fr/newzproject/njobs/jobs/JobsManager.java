@@ -4,12 +4,10 @@ import fr.newzproject.njobs.JobsCore;
 import fr.newzproject.njobs.custom.JobLevelupEvent;
 import fr.newzproject.njobs.jobs.enums.JobsEnum;
 import fr.newzproject.njobs.jobs.enums.JobsXPEnum;
-import fr.newzproject.njobs.storage.JsonStorage;
-import jdk.nashorn.internal.scripts.JO;
+import fr.newzproject.njobs.storage.json.JsonStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
