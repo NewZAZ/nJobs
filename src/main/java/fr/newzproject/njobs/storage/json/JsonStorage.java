@@ -25,11 +25,11 @@ public class JsonStorage {
         if(!new File("plugins//nJobs//jobData//" + player.getUniqueId().toString() + ".json").exists()){
             return new Jobs(player,jobsEnum,0,0);
         }
-        final JSONArray array = jsonReader.readFile(new File("plugins//nJobs//jobData//" + player.getUniqueId().toString() + ".json"));
-        if(array == null){
+        final JSONArray jobArray = jsonReader.readFile(new File("plugins//nJobs//jobData//" + player.getUniqueId().toString() + ".json"));
+        if(jobArray == null){
             return new Jobs(player,jobsEnum,0,0);
         }
-        final JSONObject objPlayer = (JSONObject) array.get(0);
+        final JSONObject objPlayer = (JSONObject) jobArray.get(0);
         final JSONObject objJob = (JSONObject) objPlayer.get("jobs");
         if(objJob == null || objJob.get("["+jobsEnum.getJob()+".lvl]") == null){
             return new Jobs(player,jobsEnum,0,0);

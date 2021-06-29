@@ -46,9 +46,9 @@ public class JobsManager {
         return null;
     }
 
-    public int getJobXp(JobsEnum jobs){
-        if(getJob(jobs) != null){
-            return getJob(jobs).getXp();
+    public int getJobXp(JobsEnum jobsEnum){
+        if(getJob(jobsEnum) != null){
+            return getJob(jobsEnum).getXp();
         }
         return -1;
     }
@@ -66,29 +66,29 @@ public class JobsManager {
         return -1;
     }
 
-    public void addJobXp(JobsEnum jobs, int xp) {
-        if (getJob(jobs) != null) {
-            Jobs job = getJob(jobs);
-            job.setXp(job.getXp() + xp);
-            playerJobs.get(player).set(indexOfJob(jobs), job);
-            if (canLevelup(jobs)) {
-                levelupJobs(jobs);
+    public void addJobXp(JobsEnum jobsEnum, int xp) {
+        if (getJob(jobsEnum) != null) {
+            Jobs jobs = getJob(jobsEnum);
+            jobs.setXp(jobs.getXp() + xp);
+            playerJobs.get(player).set(indexOfJob(jobsEnum), jobs);
+            if (canLevelup(jobsEnum)) {
+                levelupJobs(jobsEnum);
             }
         }
     }
 
-    public void levelupJobs(JobsEnum jobs){
-        if (getJob(jobs) != null) {
-            Jobs job = getJob(jobs);
-            job.setXp(job.getXp() - JobsXPEnum.getXpForLevelup(job));
-            job.setCurrentLvl(job.getCurrentLvl() +1);
-            playerJobs.get(player).set(indexOfJob(jobs), job);
-            Bukkit.getPluginManager().callEvent(new JobLevelupEvent(player,jobs,plugin.getJobsRewards().getRewards(jobs,job.getCurrentLvl()),job.getCurrentLvl(),job.getCurrentLvl() +1));
+    public void levelupJobs(JobsEnum jobsEnum){
+        if (getJob(jobsEnum) != null) {
+            Jobs jobs = getJob(jobsEnum);
+            jobs.setXp(jobs.getXp() - JobsXPEnum.getXpForLevelup(jobs));
+            jobs.setCurrentLvl(jobs.getCurrentLvl() +1);
+            playerJobs.get(player).set(indexOfJob(jobsEnum), jobs);
+            Bukkit.getPluginManager().callEvent(new JobLevelupEvent(player,jobsEnum,plugin.getJobsRewards().getRewards(jobsEnum,jobs.getCurrentLvl()),jobs.getCurrentLvl(),jobs.getCurrentLvl() +1));
         }
     }
 
-    public boolean canLevelup(JobsEnum jobs){
-        return getJob(jobs) != null && getJob(jobs).getXp() >= JobsXPEnum.getXpForLevelup(getJob(jobs));
+    public boolean canLevelup(JobsEnum jobsEnum){
+        return getJob(jobsEnum) != null && getJob(jobsEnum).getXp() >= JobsXPEnum.getXpForLevelup(getJob(jobsEnum));
     }
 
     public void save(){
