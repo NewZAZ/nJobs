@@ -19,7 +19,7 @@ public class JobListeners implements Listener {
     public void onJobLevelup(JobLevelupEvent event){
         Player player = event.getPlayer();
 
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),event.getRewards().replace("{player}", player.getName()));
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("messages.jobLevelup").replace("{player}",player.getName()).replace("{job_name}",event.getJobsEnum().getJob())));
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),event.getRewards().replace("%player%", player.getName()));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("messages.jobLevelup").replaceAll("%player%",player.getName()).replaceAll("%job_name%",event.getJobsEnum().getJob())));
     }
 }

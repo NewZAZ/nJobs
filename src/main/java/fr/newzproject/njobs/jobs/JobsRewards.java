@@ -22,9 +22,9 @@ public class JobsRewards {
 
     public void initRewards(){
         if(!file.exists()){
-            configuration.set("Mineur.1.cmd","give {player} diamond 1");
-            configuration.set("Chasseur.1.cmd","give {player} diamond 1");
-            configuration.set("Agriculteur.1.cmd","give {player} diamond 1");
+            configuration.set("Mineur.1.cmd","give %player% diamond 1");
+            configuration.set("Chasseur.1.cmd","give %player% diamond 1");
+            configuration.set("Agriculteur.1.cmd","give %player% diamond 1");
         }
         try {
             configuration.save(file);

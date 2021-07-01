@@ -2,20 +2,21 @@ package fr.newzproject.njobs.jobs.enums;
 
 import fr.newzproject.njobs.JobsCore;
 import fr.newzproject.njobs.jobs.Jobs;
+import fr.newzproject.njobs.utils.compatibility.CompatibleMaterial;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import sun.applet.Main;
 
 public enum JobsXPEnum {
-    MELON_BLOCK(JobsEnum.AGRICULTEUR,getXP("Agriculteur","MELON_BLOCK"),Material.MELON_BLOCK),
-    CARROT(JobsEnum.AGRICULTEUR,getXP("Agriculteur","CARROT"),Material.CARROT, (byte) 7),
-    POTATO(JobsEnum.AGRICULTEUR,getXP("Agriculteur","POTATO"),Material.POTATO,(byte) 7),
-    PUMPKIN(JobsEnum.AGRICULTEUR,getXP("Agriculteur","PUMPKIN"),Material.PUMPKIN),
-    CACTUS(JobsEnum.AGRICULTEUR,getXP("Agriculteur","CACTUS"),Material.CACTUS),
-    SUGAR_CANE(JobsEnum.AGRICULTEUR,getXP("Agriculteur","SUGAR_CANE_BLOCK"),Material.SUGAR_CANE_BLOCK),
-    WHEAT(JobsEnum.AGRICULTEUR,getXP("Agriculteur","CROPS"),Material.CROPS,(byte)7),
-    COCAO(JobsEnum.AGRICULTEUR,getXP("Agriculteur","COCOA"),Material.COCOA,(byte) 7),
-    NETHER_WARTS(JobsEnum.AGRICULTEUR,getXP("Agriculteur","NETHER_WARTS"),Material.NETHER_WARTS,(byte) 3),
+    MELON_BLOCK(JobsEnum.AGRICULTEUR,getXP("Agriculteur","MELON_BLOCK"), CompatibleMaterial.MELON.getBlockMaterial()),
+    CARROT(JobsEnum.AGRICULTEUR,getXP("Agriculteur","CARROT"),CompatibleMaterial.CARROT.getBlockMaterial(), (byte) 7),
+    POTATO(JobsEnum.AGRICULTEUR,getXP("Agriculteur","POTATO"),CompatibleMaterial.POTATO.getBlockMaterial(),(byte) 7),
+    PUMPKIN(JobsEnum.AGRICULTEUR,getXP("Agriculteur","PUMPKIN"),CompatibleMaterial.PUMPKIN.getBlockMaterial()),
+    CACTUS(JobsEnum.AGRICULTEUR,getXP("Agriculteur","CACTUS"),CompatibleMaterial.CACTUS.getBlockMaterial()),
+    SUGAR_CANE(JobsEnum.AGRICULTEUR,getXP("Agriculteur","SUGAR_CANE_BLOCK"),CompatibleMaterial.SUGAR_CANE.getBlockMaterial()),
+    WHEAT(JobsEnum.AGRICULTEUR,getXP("Agriculteur","CROPS"), CompatibleMaterial.WHEAT_SEEDS.getBlockMaterial(),(byte)7),
+    COCAO(JobsEnum.AGRICULTEUR,getXP("Agriculteur","COCOA"),CompatibleMaterial.COCOA.getBlockMaterial(),(byte) 7),
+    NETHER_WARTS(JobsEnum.AGRICULTEUR,getXP("Agriculteur","NETHER_WARTS"),CompatibleMaterial.NETHER_WART.getBlockMaterial(),(byte) 3),
 
     SPIDER(JobsEnum.CHASSEUR,getXP("Chasseur","SPIDER"), EntityType.SPIDER),
     CAVE_SPIDER(JobsEnum.CHASSEUR,getXP("Chasseur","CAVE_SPIDER"), EntityType.CAVE_SPIDER),

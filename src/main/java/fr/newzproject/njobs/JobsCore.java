@@ -143,6 +143,16 @@ public class JobsCore extends JavaPlugin {
         fileConfiguration.save(file);
     }
 
+    public String getMaterial(){
+        String nmsver;
+        nmsver = Bukkit.getServer().getClass().getPackage().getName();
+        nmsver = nmsver.substring(nmsver.lastIndexOf(".") + 1);
+        if(nmsver.startsWith("v1_13") || nmsver.startsWith("v1_14") || nmsver.startsWith("v1_15") || nmsver.startsWith("v1_16") || nmsver.startsWith("v1_17")){
+            return "WHEAT_SEEDS";
+        }
+        return "CROPS";
+    }
+
     public JobsRewards getJobsRewards() {
         return jobsRewards;
     }

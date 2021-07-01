@@ -18,5 +18,5 @@ messages:
   utils:
     instancePlayer: "&cYou are not a Player !"
     notHavePermission: "&cYou don't have permission !"
-  actionbar: "&a{job_name} : {job_xp} / {cost_for_levelup} (+{xp})"
-  jobLevelup: "&dGG {player} you have levelup {job_name}"
+  actionbar: "&a%job_name% : %job_xp% / %cost_for_levelup% (+%xp%)"
+  jobLevelup: "&dGG %player% you have levelup %job_name%"

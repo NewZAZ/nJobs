@@ -52,6 +52,8 @@ public class JobsCommand extends AbstractCommand {
                 if(player.hasPermission("nJobs.command.jobs.args.*")){
                     player.sendMessage("");
                 }
+            }else if(args[0].equalsIgnoreCase("author")){
+                player.sendMessage("§cPlugin made by NewZ_AZ#0001");
             }
         }
     }

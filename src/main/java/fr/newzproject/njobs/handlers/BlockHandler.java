@@ -6,8 +6,9 @@ import fr.newzproject.njobs.jobs.Jobs;
 import fr.newzproject.njobs.jobs.JobsManager;
 import fr.newzproject.njobs.jobs.enums.JobsEnum;
 import fr.newzproject.njobs.jobs.enums.JobsXPEnum;
-import fr.newzproject.njobs.utils.Reflections;
 
+import fr.newzproject.njobs.utils.compatibility.CompatibleMaterial;
+import fr.newzproject.njobs.utils.compatibility.CompatibleMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,7 +29,6 @@ public class BlockHandler {
         Player player = event.getPlayer();
         Block block = event.getBlock();
         Location location = block.getLocation();
-        Reflections reflections = new Reflections();
         if(SuperiorSkyblockAPI.getIslandAt(location) == null)return;
         if(!SuperiorSkyblockAPI.getPlayer(player).hasIsland())return;
         if(SuperiorSkyblockAPI.getPlayer(player).getIsland() != SuperiorSkyblockAPI.getIslandAt(location))return;
@@ -38,7 +38,7 @@ public class BlockHandler {
             return;
         }
 
-        if(block.getType() != Material.CROPS && block.getType() != Material.CARROT && block.getType() != Material.POTATO && block.getType() != Material.NETHER_WARTS) {
+        if(block.getType() != CompatibleMaterial.WHEAT_SEEDS.getBlockMaterial() && block.getType() != CompatibleMaterial.CARROT.getBlockMaterial() && block.getType() != CompatibleMaterial.POTATO.getBlockMaterial() && block.getType() != CompatibleMaterial.NETHER_WART.getBlockMaterial()) {
             JobsEnum jobsEnum = JobsXPEnum.getMaterialJobs(block.getType());
 
             if(jobsEnum == null)return;
@@ -46,7 +46,7 @@ public class BlockHandler {
 
             Jobs jobs = jobsManager.getJob(jobsEnum);
             new JobsManager(plugin,player).addJobXp(jobsEnum, JobsXPEnum.getMaterialWorth(block.getType()));
-            reflections.sendActionBar(event.getPlayer(), ChatColor.translateAlternateColorCodes('&',plugin.actionBarMessage.replace("{job_name}",jobsEnum.getJobName()).replace("{job_xp}",String.valueOf(jobsManager.getJobXp(jobsEnum))).replace("{cost_for_levelup}",String.valueOf(JobsXPEnum.getXpForLevelup(jobs)).replace("{xp}",String.valueOf(JobsXPEnum.getMaterialWorth(block.getType()))))));
+            CompatibleMessage.sendActionBar(event.getPlayer(), ChatColor.translateAlternateColorCodes('&',plugin.actionBarMessage.replaceAll("%job_name%",jobsEnum.getJobName()).replaceAll("%job_xp%",String.valueOf(jobsManager.getJobXp(jobsEnum))).replaceAll("%cost_for_levelup%",String.valueOf(JobsXPEnum.getXpForLevelup(jobs)).replaceAll("%xp%",String.valueOf(JobsXPEnum.getMaterialWorth(block.getType()))))));
 
         }else {
             if(JobsXPEnum.getMaterialData(event.getBlock().getType()) != event.getBlock().getData())return;
@@ -54,7 +54,7 @@ public class BlockHandler {
             if (jobsEnum == null) return;
             Jobs jobs = jobsManager.getJob(jobsEnum);
             jobsManager.addJobXp(jobsEnum,JobsXPEnum.getMaterialWorth(event.getBlock().getType()));
-            reflections.sendActionBar(event.getPlayer(), ChatColor.translateAlternateColorCodes('&',plugin.actionBarMessage.replace("{job_name}",jobsEnum.getJobName()).replace("{job_xp}",String.valueOf(jobsManager.getJobXp(jobsEnum))).replace("{cost_for_levelup}",String.valueOf(JobsXPEnum.getXpForLevelup(jobs)).replace("{xp}",String.valueOf(JobsXPEnum.getMaterialWorth(block.getType()))))));
+            CompatibleMessage.sendActionBar(event.getPlayer(), ChatColor.translateAlternateColorCodes('&',plugin.actionBarMessage.replaceAll("%job_name%",jobsEnum.getJobName()).replaceAll("%job_xp%",String.valueOf(jobsManager.getJobXp(jobsEnum))).replaceAll("%cost_for_levelup%",String.valueOf(JobsXPEnum.getXpForLevelup(jobs)).replaceAll("%xp%",String.valueOf(JobsXPEnum.getMaterialWorth(block.getType()))))));
         }
     }
 
