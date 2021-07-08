@@ -1,11 +1,18 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="[NewZ-Project] nJobs:jar">
-    <output-path>$USER_HOME$/OneDrive/Bureau/serveur/plugins</output-path>
+    <output-path>$USER_HOME$/OneDrive/Bureau/serveur-1.16/plugins</output-path>
     <root id="archive" name="[NewZ-Project] nJobs.jar">
       <element id="module-output" name="[NewZ-Project] nJobs" />
       <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
       <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/config.yml" />
       <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/worth.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/rewards.yml" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/fr/mrmicky/FastInv/3.0.3/FastInv-3.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/de/tr7zw/item-nbt-api/2.8.0/item-nbt-api-2.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/mongo-java-driver/3.12.7/mongo-java-driver-3.12.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.10.1/jackson-databind-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.10.1/jackson-core-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.10.1/jackson-annotations-2.10.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

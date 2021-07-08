@@ -1,98 +1,123 @@
 package fr.newzproject.njobs.jobs;
 
 import fr.newzproject.njobs.JobsCore;
-import fr.newzproject.njobs.custom.JobLevelupEvent;
-import fr.newzproject.njobs.jobs.enums.JobsEnum;
-import fr.newzproject.njobs.jobs.enums.JobsXPEnum;
-import fr.newzproject.njobs.storage.json.JsonStorage;
+import fr.newzproject.njobs.entity.JPlayer;
+import fr.newzproject.njobs.events.JobLevelupEvent;
+import fr.newzproject.njobs.storage.mongo.MongoStorage;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JobsManager {
-    private final JobsCore plugin;
-    private final Player player;
-    private final HashMap<Player, List<Jobs>> playerJobs;
+    private static JobsManager instance;
+    private final HashMap<UUID, JPlayer> playerJobs = new HashMap<>();
 
-    public JobsManager(JobsCore plugin, Player player) {
-        this.plugin = plugin;
-        this.player = player;
-        playerJobs = plugin.getPlayerJobs();
+    public JobsManager() {
+        instance = this;
     }
 
-    public void init(){
-        List<Jobs> jobs = new ArrayList<>();
-        JsonStorage storage = new JsonStorage();
-        jobs.add(storage.getJobs(player,JobsEnum.AGRICULTEUR));
-        jobs.add(storage.getJobs(player,JobsEnum.CHASSEUR));
-        jobs.add(storage.getJobs(player,JobsEnum.MINEUR));
-        plugin.getPlayerJobs().put(player, jobs);
+    /**
+     * Load a player on MySQL DB in order to put it in the cache.
+     *
+     * @param uuid user's {@link UUID}.
+     */
+
+    public void init(UUID uuid) {
+        playerJobs.remove(uuid);
+        MongoStorage mongoStorage = new MongoStorage();
+
+        playerJobs.put(uuid, mongoStorage.load(uuid));
+        Bukkit.getScheduler().runTaskTimer(JobsCore.getInstance(), () -> save(uuid), 20L * 60L * 5L, 20L * 60L * 5L);
     }
 
-    public Jobs getJob(JobsEnum jobsEnum){
-        if(playerJobs.containsKey(player)){
-            for(Map.Entry<Player, List<Jobs>> entry : playerJobs.entrySet()){
-                for (Jobs job : entry.getValue()) {
-                    if(job.getJobs() == jobsEnum){
+    /**
+     * @param uuid     user's {@link UUID}.
+     * @return a player's job.
+     */
+
+    public Job getJob(UUID uuid, JobType type) {
+        if (playerJobs.containsKey(uuid)) {
+            for (Map.Entry<UUID, JPlayer> entry : playerJobs.entrySet()) {
+                for (Job job : entry.getValue().getJobs()) {
+                    if (job.getJobName().equalsIgnoreCase(type.getName())) {
                         return job;
                     }
                 }
             }
         }
-        return null;
+        Job job = new Job();
+        job.setJobName(type.getName());
+        return job;
     }
 
-    public int getJobXp(JobsEnum jobsEnum){
-        if(getJob(jobsEnum) != null){
-            return getJob(jobsEnum).getXp();
+    /**
+     * @param uuid     user's {@link UUID}.
+     * @return a player's job xp.
+     */
+
+    public double getJobXp(UUID uuid, JobType type) {
+        if (getJob(uuid,type) != null) {
+            return getJob(uuid, type).getXp();
         }
         return -1;
     }
 
-    public int indexOfJob(JobsEnum jobsEnum){
-        if(playerJobs.containsKey(player)){
-            for(Map.Entry<Player, List<Jobs>> entry : playerJobs.entrySet()){
-                for (Jobs job : entry.getValue()) {
-                    if(job.getJobs() == jobsEnum){
-                        return entry.getValue().indexOf(job);
-                    }
-                }
-            }
-        }
-        return -1;
-    }
+    /**
+     * Add xp on player's job.
+     *
+     * @param uuid     user's {@link UUID}.
+     * @param xp       {@link Integer}
+     */
 
-    public void addJobXp(JobsEnum jobsEnum, int xp) {
-        if (getJob(jobsEnum) != null) {
-            Jobs jobs = getJob(jobsEnum);
-            jobs.setXp(jobs.getXp() + xp);
-            playerJobs.get(player).set(indexOfJob(jobsEnum), jobs);
-            if (canLevelup(jobsEnum)) {
-                levelupJobs(jobsEnum);
+    public void addJobXp(UUID uuid, JobType type, double xp) {
+        if (getJob(uuid, type) != null) {
+            Job job = getJob(uuid, type);
+            job.setXp(job.getXp() + xp);
+            playerJobs.get(uuid).getJobs().add(job);
+            if (canLevelup(uuid, type)) {
+                levelupJobs(uuid, type);
             }
         }
     }
 
-    public void levelupJobs(JobsEnum jobsEnum){
-        if (getJob(jobsEnum) != null) {
-            Jobs jobs = getJob(jobsEnum);
-            jobs.setXp(jobs.getXp() - JobsXPEnum.getXpForLevelup(jobs));
-            jobs.setCurrentLvl(jobs.getCurrentLvl() +1);
-            playerJobs.get(player).set(indexOfJob(jobsEnum), jobs);
-            Bukkit.getPluginManager().callEvent(new JobLevelupEvent(player,jobsEnum,plugin.getJobsRewards().getRewards(jobsEnum,jobs.getCurrentLvl()),jobs.getCurrentLvl(),jobs.getCurrentLvl() +1));
+    /**
+     * Levelup player's job
+     * @param uuid     user's {@link UUID}.
+     * @param type
+     */
+
+    public void levelupJobs(UUID uuid, JobType type) {
+        if (getJob(uuid, type) != null) {
+            Job job = getJob(uuid, type);
+            job.setXp(job.getXp() - JobsXPManager.getInstance().getXpForLevelup(type,job));
+            job.setCurrentLvl(job.getCurrentLvl() + 1);
+            playerJobs.get(uuid).getJobs().add(job);
+            Bukkit.getPluginManager().callEvent(new JobLevelupEvent(uuid, type, JobsRewards.getInstance().getRewards(type, job.getCurrentLvl()), job.getCurrentLvl(), job.getCurrentLvl() + 1));
         }
     }
 
-    public boolean canLevelup(JobsEnum jobsEnum){
-        return getJob(jobsEnum) != null && getJob(jobsEnum).getXp() >= JobsXPEnum.getXpForLevelup(getJob(jobsEnum));
+    /**
+     * @param uuid     user's {@link UUID}.
+     * @return If player can levelup her job
+     */
+
+    public boolean canLevelup(UUID uuid, JobType type) {
+        return getJob(uuid, type) != null && getJob(uuid, type).getXp() >= JobsXPManager.getInstance().getXpForLevelup(type, getJob(uuid, type));
     }
 
-    public void save(){
-        new JsonStorage().saveJobs(player, playerJobs.get(player));
+    /**
+     * Save player's job
+     *
+     * @param uuid user's {@link UUID}.
+     */
 
+    public void save(UUID uuid) {
+        new MongoStorage().save(playerJobs.get(uuid));
+        playerJobs.remove(uuid);
+    }
+
+
+    public static JobsManager getInstance() {
+        return instance == null ? instance = new JobsManager() : instance;
     }
 }

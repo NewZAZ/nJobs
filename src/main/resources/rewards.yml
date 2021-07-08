@@ -1,0 +1,63 @@
+Mineur:
+  1:
+    cmd: give {player} diamond 1
+  2:
+    cmd: give {player} diamond 2
+  3:
+    cmd: give {player} diamond 3
+  4:
+    cmd: give {player} diamond 4
+  5:
+    cmd: give {player} diamond 5
+  6:
+    cmd: give {player} diamond 6
+  7:
+    cmd: give {player} diamond 7
+  8:
+    cmd: give {player} diamond 8
+  9:
+    cmd: give {player} diamond 9
+  10:
+    cmd: give {player} diamond 10
+Chasseur:
+  1:
+    cmd: give {player} diamond 1
+  2:
+    cmd: give {player} diamond 2
+  3:
+    cmd: give {player} diamond 3
+  4:
+    cmd: give {player} diamond 4
+  5:
+    cmd: give {player} diamond 5
+  6:
+    cmd: give {player} diamond 6
+  7:
+    cmd: give {player} diamond 7
+  8:
+    cmd: give {player} diamond 8
+  9:
+    cmd: give {player} diamond 9
+  10:
+    cmd: give {player} diamond 10
+Agriculteur:
+  1:
+    cmd: give {player} diamond 1
+  2:
+    cmd: give {player} diamond 2
+  3:
+    cmd: give {player} diamond 3
+  4:
+    cmd: give {player} diamond 4
+  5:
+    cmd: give {player} diamond 5
+  6:
+    cmd: give {player} diamond 6
+  7:
+    cmd: give {player} diamond 7
+  8:
+    cmd: give {player} diamond 8
+  9:
+    cmd: give {player} diamond 9
+  10:
+    cmd: give {player} diamond 10

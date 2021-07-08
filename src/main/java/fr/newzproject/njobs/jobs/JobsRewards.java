@@ -1,36 +1,28 @@
 package fr.newzproject.njobs.jobs;
 
-import fr.newzproject.api.items.ItemBuilder;
-import fr.newzproject.njobs.jobs.enums.JobsEnum;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class JobsRewards {
+    private static JobsRewards instance;
+
     private final File file = new File("plugins/nJobs","rewards.yml");
     private final FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
-    private final HashMap<JobsEnum, HashMap<Integer, String>> jobsRewardHashMap = new HashMap<>();
+    private final Map<JobType, Map<Integer, String>> jobsRewardHashMap = new HashMap<>();
 
+    private JobsRewards() {
+        instance = this;
+    }
+
+    /**
+     * Init rewards on server's load
+     */
     public void initRewards(){
-        if(!file.exists()){
-            configuration.set("Mineur.1.cmd","give %player% diamond 1");
-            configuration.set("Chasseur.1.cmd","give %player% diamond 1");
-            configuration.set("Agriculteur.1.cmd","give %player% diamond 1");
-        }
-        try {
-            configuration.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         for(String key : configuration.getKeys(true)){
             if(key.contains("Mineur")){
 
@@ -38,9 +30,7 @@ public class JobsRewards {
 
                 if(keys.length == 2) {
                     if (isInteger(keys[1])) {
-                        HashMap<Integer, String> reward = new HashMap<>();
-                        reward.put(Integer.parseInt(keys[1]), getCmd(keys[0], Integer.parseInt(keys[1])));
-                        jobsRewardHashMap.putIfAbsent(JobsEnum.MINEUR, reward);
+                        jobsRewardHashMap.computeIfAbsent(JobType.MINEUR,jobType -> new HashMap<>()).put(Integer.parseInt(keys[1]),getCmd(keys[0], Integer.parseInt(keys[1])));
                     }
                 }
             }else if(key.contains("Chasseur")){
@@ -48,9 +38,7 @@ public class JobsRewards {
 
                 if(keys.length == 2) {
                     if (isInteger(keys[1])) {
-                        HashMap<Integer, String> reward = new HashMap<>();
-                        reward.put(Integer.parseInt(keys[1]), getCmd(keys[0], Integer.parseInt(keys[1])));
-                        jobsRewardHashMap.putIfAbsent(JobsEnum.CHASSEUR, reward);
+                        jobsRewardHashMap.computeIfAbsent(JobType.CHASSEUR,jobType -> new HashMap<>()).put(Integer.parseInt(keys[1]),getCmd(keys[0], Integer.parseInt(keys[1])));
                     }
                 }
             }else if(key.contains("Agriculteur")){
@@ -58,32 +46,44 @@ public class JobsRewards {
 
                 if(keys.length == 2) {
                     if (isInteger(keys[1])) {
-                        HashMap<Integer, String> reward = new HashMap<>();
-                        reward.put(Integer.parseInt(keys[1]), getCmd(keys[0], Integer.parseInt(keys[1])));
-                        jobsRewardHashMap.putIfAbsent(JobsEnum.AGRICULTEUR, reward);
+                        jobsRewardHashMap.computeIfAbsent(JobType.AGRICULTEUR,jobType -> new HashMap<>()).put(Integer.parseInt(keys[1]),getCmd(keys[0], Integer.parseInt(keys[1])));
                     }
                 }
             }
         }
     }
 
-    public String getRewards(JobsEnum jobsEnum, int level){
-        return jobsRewardHashMap.get(jobsEnum).getOrDefault(level,"rien");
+    /**
+     *
+     * @param level reward's level.
+     * @return reward's command.
+     */
+
+    public String getRewards(JobType type, int level){
+        return jobsRewardHashMap.get(type).getOrDefault(level,"rien");
     }
+
+    /**
+     *
+     * @param job reward's job.
+     * @param level reward's level.
+     * @return reward's command.
+     */
 
     private String getCmd(String job, int level){
         return configuration.getString(job+"."+level+".cmd");
     }
 
-    private boolean isInteger(String s)
-    {
-        try
-        {
+    private boolean isInteger(String s) {
+        try {
             Integer.parseInt(s);
             return true;
-        } catch (NumberFormatException ex)
-        {
+        } catch (NumberFormatException ex) {
             return false;
         }
+    }
+
+    public static JobsRewards getInstance() {
+        return instance == null ? instance = new JobsRewards() : instance;
     }
 }

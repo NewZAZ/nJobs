@@ -1,4 +1,9 @@
 License: "null"
+DB:
+  host: "localhost"
+  user: "root"
+  pass: ""
+  dbName: "nJobs"
 Agriculteur:
   name: "&cAgriculteur"
   maxLvl: 10

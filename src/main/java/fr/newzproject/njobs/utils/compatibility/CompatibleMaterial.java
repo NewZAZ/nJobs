@@ -1419,8 +1419,8 @@ public enum CompatibleMaterial {
      * @return
      */
     public boolean usesCompatibility() {
-        return compatibleMaterial != null && material == compatibleMaterial.material;
-        //return compatibleMaterial != null && ServerVersion.isServerVersionBelow(compatibleMaterial.versionLessThan);
+        return compatibleMaterial != null && ServerVersion.isServerVersionBelow(compatibleMaterial.versionLessThan);
+        // return compatibleMaterial != null && material == compatibleMaterial.material;
     }
 
     /**

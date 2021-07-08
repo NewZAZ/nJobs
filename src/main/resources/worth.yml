@@ -1,91 +1,137 @@
 Agriculteur:
-  MELON_BLOCK:
+  MELON:
     xp: 10
-  CARROT:
-    xp: 5
-  POTATO:
-    xp: 5
+  CARROTS:
+    xp: 10
+  SUGAR_CANE:
+    xp: 10
+  POTATOES:
+    xp: 10
   PUMPKIN:
     xp: 10
   CACTUS:
-    xp: 2
-  SUGAR_CANE:
-    xp: 2
+    xp: 10
   WHEAT:
-    xp: 8
+    xp: 10
   COCOA:
-    xp: 7
-  NETHER_WARTS:
-    xp: 9
-
+    xp: 10
+  NETHER_WART:
+    xp: 10
+  BAMBOO:
+    xp: 10
+  BEETROOTS:
+    xp: 10
 Chasseur:
   SPIDER:
     xp: 10
   CAVE_SPIDER:
-    xp: 5
+    xp: 10
   ENDERMAN:
-    xp: 5
+    xp: 10
   PIG_ZOMBIE:
     xp: 10
   BLAZE:
-    xp: 2
+    xp: 10
   CREEPER:
-    xp: 2
+    xp: 10
   MAGMA_CUBE:
-    xp: 8
+    xp: 10
   SKELETON:
-    xp: 7
+    xp: 10
   SLIME:
-    xp: 9
+    xp: 10
   WITCH:
     xp: 10
   ZOMBIE_VILLAGER:
-    xp: 5
+    xp: 10
   GUARDIAN:
-    xp: 5
+    xp: 10
   GHAST:
     xp: 10
   WITHER_SKELETON:
-    xp: 2
+    xp: 10
   ZOMBIE:
-    xp: 2
+    xp: 10
   PIG:
-    xp: 8
+    xp: 10
   CHICKEN:
-    xp: 7
+    xp: 10
   COW:
-    xp: 9
+    xp: 10
   HORSE:
-    xp: 5
+    xp: 10
   LLAMA:
-    xp: 5
+    xp: 10
   POLAR_BEAR:
     xp: 10
   RABBIT:
-    xp: 2
+    xp: 10
   SHEEP:
-    xp: 2
+    xp: 10
   SQUID:
-    xp: 8
+    xp: 10
   WOLF:
-    xp: 7
-
+    xp: 10
+  BEE:
+    xp: 10
+  PHANTOM:
+    xp: 10
+  PIGLIN:
+    xp: 10
+  PIGLIN_BRUTE:
+    xp: 10
+  PILLAGER:
+    xp: 10
+  PLAYER:
+    xp: 10
+  RAVAGER:
+    xp: 10
+  SKELETON_HORSE:
+    xp: 10
+  TURTLE:
+    xp: 10
+  VEX:
+    xp: 10
+  VILLAGER:
+    xp: 10
+  VINDICATOR:
+    xp: 10
+  WITHER:
+    xp: 10
+  ZOGLIN:
+    xp: 10
+  ZOMBIE_HORSE:
+    xp: 10
+  ZOMBIFIED_PIGLIN:
+    xp: 10
 Mineur:
   STONE:
-    xp: 1
-  COAL:
-    xp: 2
-  IRON:
-    xp: 5
-  GOLD:
-    xp: 7
-  REDSTONE:
-    xp: 4
-  LAPIS:
-    xp: 4
-  DIAMOND:
-    xp: 15
-  EMERALD:
-    xp: 18
-  QUARTZ:
-    xp: 2
+    xp: 10
+  COBBLESTONE:
+    xp: 10
+  GRANITE:
+    xp: 10
+  ANDESITE:
+    xp: 10
+  DIORITE:
+    xp: 10
+  ANCIENT_DEBRIS:
+    xp: 10
+  COAL_ORE:
+    xp: 10
+  COPPER_ORE:
+    xp: 10
+  IRON_ORE:
+    xp: 10
+  GOLD_ORE:
+    xp: 10
+  REDSTONE_ORE:
+    xp: 10
+  LAPIS_ORE:
+    xp: 10
+  DIAMOND_ORE:
+    xp: 10
+  EMERALD_ORE:
+    xp: 10
+  NETHER_QUARTZ_ORE:
+    xp: 10

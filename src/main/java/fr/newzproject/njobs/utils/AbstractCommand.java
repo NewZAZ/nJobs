@@ -51,6 +51,6 @@ public abstract class AbstractCommand implements CommandExecutor {
 
     public static void registerCommands(JobsCore core) {
         plugin = core;
-        new JobsCommand(core);
+        new JobsCommand();
     }
 }

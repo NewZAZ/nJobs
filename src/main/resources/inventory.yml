@@ -1,0 +1,77 @@
+gui:
+  name: "&cnJobs - GUI"
+  size: 27
+  inventory:
+    0:
+      material: "YELLOW_STAINED_GLASS_PANE"
+      name: " "
+    1:
+      material: "YELLOW_STAINED_GLASS_PANE"
+      name: ""
+    2:
+      material: "AIR"
+    3:
+      material: "AIR"
+    4:
+      material: "AIR"
+    5:
+      material: "AIR"
+    6:
+      material: "AIR"
+    7:
+      material: "AIR"
+    8:
+      material: "AIR"
+    9:
+      material: "YELLOW_STAINED_GLASS_PANE"
+      name: " "
+    10:
+      material: "AIR"
+    11:
+      material: "AIR"
+    12:
+      material: "DIAMOND_PICKAXE"
+      name: "&cMineur"
+      lore:
+        - "&cNiveau : %mineur_level%/%mineur_maxLvl%"
+        - "&cXp : %mineur_xp%/%mineur_xp_for_levelup%"
+    13:
+      material: "DIAMOND_HOE"
+      name: "&aAgriculteur"
+      lore:
+        - "&cNiveau : %agriculteur_level%/%agriculteur_maxLvl%"
+        - "&cXp : %agriculteur_xp%/%agriculteur_xp_for_levelup%"
+    14:
+      material: "DIAMOND_SWORD"
+      name: "&cChasseur"
+      lore:
+        - "&cNiveau : %chasseur_level%/%chasseur_maxLvl%"
+        - "&cXp : %chasseur_xp%/%chasseur_xp_for_levelup%"
+    15:
+      material: "AIR"
+    16:
+      material: "AIR"
+    17:
+      material: "YELLOW_STAINED_GLASS_PANE"
+      name: " "
+    18:
+      material: "AIR"
+    19:
+      material: "AIR"
+    20:
+      material: "AIR"
+    21:
+      material: "AIR"
+    22:
+      material: "AIR"
+    23:
+      material: "AIR"
+    24:
+      material: "AIR"
+    25:
+      material: "YELLOW_STAINED_GLASS_PANE"
+      name: " "
+    26:
+      material: "YELLOW_STAINED_GLASS_PANE"
+      name: " "
+
