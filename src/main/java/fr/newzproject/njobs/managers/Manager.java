@@ -1,18 +1,22 @@
-package fr.newzproject.njobs.jobs;
+package fr.newzproject.njobs.managers;
 
 import fr.newzproject.njobs.JobsCore;
 import fr.newzproject.njobs.entity.JPlayer;
 import fr.newzproject.njobs.events.JobLevelupEvent;
+import fr.newzproject.njobs.jobs.Job;
+import fr.newzproject.njobs.jobs.JobType;
 import fr.newzproject.njobs.storage.mongo.MongoStorage;
 import org.bukkit.Bukkit;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
-public class JobsManager {
-    private static JobsManager instance;
+public class Manager {
+    private static Manager instance;
     private final HashMap<UUID, JPlayer> playerJobs = new HashMap<>();
 
-    public JobsManager() {
+    public Manager() {
         instance = this;
     }
 
@@ -31,7 +35,7 @@ public class JobsManager {
     }
 
     /**
-     * @param uuid     user's {@link UUID}.
+     * @param uuid user's {@link UUID}.
      * @return a player's job.
      */
 
@@ -39,24 +43,23 @@ public class JobsManager {
         if (playerJobs.containsKey(uuid)) {
             for (Map.Entry<UUID, JPlayer> entry : playerJobs.entrySet()) {
                 for (Job job : entry.getValue().getJobs()) {
-                    if (job.getJobName().equalsIgnoreCase(type.getName())) {
+                    if (job.getName().equalsIgnoreCase(type.getName())) {
                         return job;
                     }
                 }
             }
         }
-        Job job = new Job();
-        job.setJobName(type.getName());
+        Job job = new Job(type.getName(), type, 0, 0, 0);
         return job;
     }
 
     /**
-     * @param uuid     user's {@link UUID}.
+     * @param uuid user's {@link UUID}.
      * @return a player's job xp.
      */
 
     public double getJobXp(UUID uuid, JobType type) {
-        if (getJob(uuid,type) != null) {
+        if (getJob(uuid, type) != null) {
             return getJob(uuid, type).getXp();
         }
         return -1;
@@ -65,8 +68,8 @@ public class JobsManager {
     /**
      * Add xp on player's job.
      *
-     * @param uuid     user's {@link UUID}.
-     * @param xp       {@link Integer}
+     * @param uuid user's {@link UUID}.
+     * @param xp   {@link Integer}
      */
 
     public void addJobXp(UUID uuid, JobType type, double xp) {
@@ -82,27 +85,28 @@ public class JobsManager {
 
     /**
      * Levelup player's job
-     * @param uuid     user's {@link UUID}.
+     *
+     * @param uuid user's {@link UUID}.
      * @param type
      */
 
     public void levelupJobs(UUID uuid, JobType type) {
         if (getJob(uuid, type) != null) {
             Job job = getJob(uuid, type);
-            job.setXp(job.getXp() - JobsXPManager.getInstance().getXpForLevelup(type,job));
-            job.setCurrentLvl(job.getCurrentLvl() + 1);
+            job.setXp(job.getXp() - WorthManager.getInstance().getXpForLevelup(type, job));
+            job.setLevel(job.getLevel() + 1);
             playerJobs.get(uuid).getJobs().add(job);
-            Bukkit.getPluginManager().callEvent(new JobLevelupEvent(uuid, type, JobsRewards.getInstance().getRewards(type, job.getCurrentLvl()), job.getCurrentLvl(), job.getCurrentLvl() + 1));
+            Bukkit.getPluginManager().callEvent(new JobLevelupEvent(uuid, type, RewardsManager.getInstance().getRewards(type, job.getLevel()), job.getLevel(), job.getLevel() + 1));
         }
     }
 
     /**
-     * @param uuid     user's {@link UUID}.
+     * @param uuid user's {@link UUID}.
      * @return If player can levelup her job
      */
 
     public boolean canLevelup(UUID uuid, JobType type) {
-        return getJob(uuid, type) != null && getJob(uuid, type).getXp() >= JobsXPManager.getInstance().getXpForLevelup(type, getJob(uuid, type));
+        return getJob(uuid, type) != null && getJob(uuid, type).getXp() >= WorthManager.getInstance().getXpForLevelup(type, getJob(uuid, type));
     }
 
     /**
@@ -117,7 +121,7 @@ public class JobsManager {
     }
 
 
-    public static JobsManager getInstance() {
-        return instance == null ? instance = new JobsManager() : instance;
+    public static Manager getInstance() {
+        return instance == null ? instance = new Manager() : instance;
     }
 }

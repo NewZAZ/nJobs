@@ -5,7 +5,7 @@ import com.bgsoftware.superiorskyblock.api.island.IslandPrivilege;
 import fr.newzproject.njobs.JobsCore;
 import fr.newzproject.njobs.handlers.BlockBreakHandler;
 import fr.newzproject.njobs.jobs.JobType;
-import fr.newzproject.njobs.jobs.JobsXPManager;
+import fr.newzproject.njobs.managers.WorthManager;
 import fr.newzproject.njobs.utils.compatibility.CompatibleMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
@@ -28,23 +28,25 @@ public class BlockListeners implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockPlace(BlockPlaceEvent event){
-        if(event.isCancelled())return;
+    public void onBlockPlace(BlockPlaceEvent event) {
+        if (event.isCancelled()) return;
         Block block = event.getBlockPlaced();
-        if(SuperiorSkyblockAPI.getIslandAt(event.getBlock().getLocation()) != null&& !Objects.requireNonNull(SuperiorSkyblockAPI.getIslandAt(event.getBlock().getLocation())).hasPermission(SuperiorSkyblockAPI.getPlayer(event.getPlayer()), IslandPrivilege.getByName("BUILD")))return;
-        if(CompatibleMaterial.getMaterial(block) == null)return;
-        Collection<JobType> types = JobsXPManager.getInstance().getJobType(CompatibleMaterial.getMaterial(block));
+        if (SuperiorSkyblockAPI.getIslandAt(event.getBlock().getLocation()) != null && !Objects.requireNonNull(SuperiorSkyblockAPI.getIslandAt(event.getBlock().getLocation())).hasPermission(SuperiorSkyblockAPI.getPlayer(event.getPlayer()), IslandPrivilege.getByName("BUILD")))
+            return;
+        if (CompatibleMaterial.getMaterial(block) == null) return;
+        Collection<JobType> types = WorthManager.getInstance().getJobType(CompatibleMaterial.getMaterial(block));
         if (types == null || types.size() == 0) return;
-        if(block.getState().getData() instanceof Crops || CompatibleMaterial.getMaterial(block) == CompatibleMaterial.NETHER_WART)return;
-            event.getBlockPlaced().setMetadata(event.getPlayer().getUniqueId().toString(),new FixedMetadataValue(plugin,true));
+        if (block.getState().getData() instanceof Crops || CompatibleMaterial.getMaterial(block) == CompatibleMaterial.NETHER_WART)
+            return;
+        event.getBlockPlaced().setMetadata(event.getPlayer().getUniqueId().toString(), new FixedMetadataValue(plugin, true));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockBreak(BlockBreakEvent event){
-        if(Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")){
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
             new BlockBreakHandler(plugin).superiorSkyBlockBlockBreak(event);
             System.out.println("test");
-        }else{
+        } else {
             System.out.println("ERROR : NEED SuperiorSkyblock2");
         }
     }

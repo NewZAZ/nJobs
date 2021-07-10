@@ -1,8 +1,5 @@
 package fr.newzproject.njobs.utils;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import com.mojang.authlib.properties.PropertyMap;
 import fr.newzproject.njobs.utils.compatibility.CompatibleMaterial;
 import fr.newzproject.njobs.utils.compatibility.ServerProject;
 import fr.newzproject.njobs.utils.compatibility.ServerVersion;
@@ -392,7 +389,7 @@ public class ItemBuilder {
         return this;
     }
 
-    private GameProfile createProfileWithTexture(String texture) {
+    /*private GameProfile createProfileWithTexture(String texture) {
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
         PropertyMap propertyMap = profile.getProperties();
         propertyMap.put("textures", new Property("textures", texture));
@@ -407,7 +404,7 @@ public class ItemBuilder {
             throw new IllegalStateException("Unable to inject GameProfile");
 
         return this;
-    }
+    }*/
 
     /**
      * Is potion boolean.

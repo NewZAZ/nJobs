@@ -6,7 +6,6 @@ import fr.newzproject.njobs.boosters.Booster;
 import fr.newzproject.njobs.jobs.Job;
 import fr.newzproject.njobs.serializer.JPlayerDeserializer;
 import fr.newzproject.njobs.serializer.JPlayerSerializer;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;

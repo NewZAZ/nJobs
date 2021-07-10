@@ -1,7 +1,6 @@
 package fr.newzproject.njobs.boosters;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import fr.newzproject.njobs.JobsCore;
 import fr.newzproject.njobs.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -52,7 +51,7 @@ public class BoosterItem {
 
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if(event.getHand() != EquipmentSlot.HAND)return;
+        if (event.getHand() != EquipmentSlot.HAND) return;
         if (!isBoosterItem(itemStack)) return;
 
         if (boosterManager.isAlreadyStart(player.getUniqueId()) || boosterManager.hasBoosters(player.getUniqueId())) {
@@ -62,7 +61,7 @@ public class BoosterItem {
         Booster booster = new Booster();
         booster.setMultiplier(getMultiplier(itemStack));
         booster.setTime(getTime(itemStack));
-        boosterManager.startBoosters(player.getUniqueId(),booster);
+        boosterManager.startBoosters(player.getUniqueId(), booster);
     }
 
 }

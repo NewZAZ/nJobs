@@ -1,21 +1,25 @@
 package fr.newzproject.njobs.api;
 
-import fr.newzproject.njobs.jobs.*;
+import fr.newzproject.njobs.jobs.Job;
+import fr.newzproject.njobs.jobs.JobType;
+import fr.newzproject.njobs.managers.Manager;
+import fr.newzproject.njobs.managers.RewardsManager;
+import fr.newzproject.njobs.managers.WorthManager;
 
 import java.util.UUID;
 
 public class JobsCoreAPI {
 
-    public static JobsManager getManager() {
-        return JobsManager.getInstance();
+    public static Manager getManager() {
+        return Manager.getInstance();
     }
 
-    public static JobsXPManager getXPManager() {
-        return JobsXPManager.getInstance();
+    public static WorthManager getWorthManager() {
+        return WorthManager.getInstance();
     }
 
-    public static JobsRewards getRewards() {
-        return JobsRewards.getInstance();
+    public static RewardsManager getRewards() {
+        return RewardsManager.getInstance();
     }
 
     public static Job get(UUID uuid, JobType type) {

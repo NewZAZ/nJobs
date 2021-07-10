@@ -11,7 +11,7 @@ import fr.newzproject.njobs.storage.mongo.Mongo;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class JobsMongoService implements MongoService<JPlayer>{
+public class JobsMongoService implements MongoService<JPlayer> {
     private final MongoCollection<BasicDBObject> collection;
     private final ObjectMapper mapper;
 
@@ -35,9 +35,12 @@ public class JobsMongoService implements MongoService<JPlayer>{
 
     @Override
     public void set(Stream<JPlayer> objects) {
-        objects.forEach(person ->  {
-            try { set(person);
-            } catch (JsonProcessingException e) { e.printStackTrace(); }
+        objects.forEach(person -> {
+            try {
+                set(person);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         });
     }
 

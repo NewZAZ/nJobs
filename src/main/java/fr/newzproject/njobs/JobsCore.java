@@ -2,12 +2,13 @@ package fr.newzproject.njobs;
 
 import fr.mrmicky.fastinv.FastInvManager;
 import fr.newzproject.njobs.jobs.JobType;
-import fr.newzproject.njobs.jobs.JobsManager;
-import fr.newzproject.njobs.jobs.JobsRewards;
 import fr.newzproject.njobs.listeners.BlockListeners;
 import fr.newzproject.njobs.listeners.EntityListeners;
 import fr.newzproject.njobs.listeners.JobListeners;
 import fr.newzproject.njobs.listeners.PlayerListeners;
+import fr.newzproject.njobs.managers.Manager;
+import fr.newzproject.njobs.managers.RewardsManager;
+import fr.newzproject.njobs.managers.WorthManager;
 import fr.newzproject.njobs.storage.mongo.DBCredentials;
 import fr.newzproject.njobs.storage.mongo.Mongo;
 import fr.newzproject.njobs.utils.AbstractCommand;
@@ -55,17 +56,17 @@ public class JobsCore extends JavaPlugin {
             saveResource("rewards");
             saveResource("inventory");
 
-            System.setProperty("DB.TRACE","true");
+            System.setProperty("DB.TRACE", "true");
             Logger.getLogger("org.mongodb.driver").setLevel(Level.WARNING);
-            new Config().initWorth();
+            WorthManager.getInstance().initWorth();
 
-            Mongo.getInstance().connect(new DBCredentials(getConfig().getString("DB.host"),getConfig().getString("DB.user"),getConfig().getString("DB.pass"),getConfig().getString("DB.dbName")));
+            Mongo.getInstance().connect(new DBCredentials(getConfig().getString("DB.host"), getConfig().getString("DB.user"), getConfig().getString("DB.pass"), getConfig().getString("DB.dbName")));
 
             registerListeners(new BlockListeners(this), new PlayerListeners(), new JobListeners(this), new EntityListeners(this));
 
             AbstractCommand.registerCommands(this);
             initConfig();
-            JobsRewards.getInstance().initRewards();
+            RewardsManager.getInstance().initRewards();
         } else {
             System.out.println("\u001B[31mERROR !\u001B[0m");
             getServer().getPluginManager().disablePlugin(this);
@@ -86,7 +87,7 @@ public class JobsCore extends JavaPlugin {
     @Override
     public void onDisable() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            JobsManager.getInstance().save(player.getUniqueId());
+            Manager.getInstance().save(player.getUniqueId());
         }
     }
 

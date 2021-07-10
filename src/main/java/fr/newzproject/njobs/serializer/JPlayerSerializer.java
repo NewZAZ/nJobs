@@ -7,7 +7,6 @@ import fr.newzproject.njobs.entity.JPlayer;
 import fr.newzproject.njobs.jobs.Job;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class JPlayerSerializer extends StdSerializer<JPlayer> {
 
@@ -20,11 +19,11 @@ public class JPlayerSerializer extends StdSerializer<JPlayer> {
         jsonGenerator.writeStartObject();
         jsonGenerator.writeObjectField("uuid", jPlayer.getUuid());
         jsonGenerator.writeArrayFieldStart("jobs");
-        for(Job jobs : jPlayer.getJobs()){
+        for (Job jobs : jPlayer.getJobs()) {
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("name",jobs.getJobName());
-            jsonGenerator.writeNumberField("xp",jobs.getXp());
-            jsonGenerator.writeNumberField("level",jobs.getCurrentLvl());
+            jsonGenerator.writeStringField("name", jobs.getName());
+            jsonGenerator.writeNumberField("xp", jobs.getXp());
+            jsonGenerator.writeNumberField("level", jobs.getLevel());
             jsonGenerator.writeEndObject();
         }
         jsonGenerator.writeEndArray();

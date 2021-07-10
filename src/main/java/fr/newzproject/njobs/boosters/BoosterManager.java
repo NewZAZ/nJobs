@@ -61,7 +61,7 @@ public class BoosterManager {
                     boosterTask.put(uuid, task);
                     Bukkit.getPlayer(uuid).sendMessage("§cTu vien de commencer ton booster !");
                     ItemStack itemStack = Bukkit.getPlayer(uuid).getInventory().getItemInMainHand();
-                    Bukkit.getPlayer(uuid).getInventory().setItemInMainHand(new ItemBuilder(itemStack).setAmount(itemStack.getAmount()-1).toItemStack());
+                    Bukkit.getPlayer(uuid).getInventory().setItemInMainHand(new ItemBuilder(itemStack).setAmount(itemStack.getAmount() - 1).toItemStack());
                 }
                 int time = getTime(uuid);
 

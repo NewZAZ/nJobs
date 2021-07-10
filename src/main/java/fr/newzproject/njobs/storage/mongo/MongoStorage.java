@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mongodb.BasicDBObject;
 import fr.newzproject.njobs.entity.JPlayer;
 import fr.newzproject.njobs.jobs.Job;
+import fr.newzproject.njobs.jobs.JobType;
 import fr.newzproject.njobs.storage.mongo.services.JobsMongoService;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,9 +24,9 @@ public class MongoStorage {
         Optional<JPlayer> jobsOptional = jobsMongoService.get(dbObject);
         JPlayer player = new JPlayer(uuid);
 
-        player.getJobs().add(set("Mineur",0,0));
-        player.getJobs().add(set("Chasseur",0,0));
-        player.getJobs().add(set("Agriculteur",0,0));
+        player.getJobs().add(set("Mineur", JobType.MINEUR, 0, 0, 10));
+        player.getJobs().add(set("Chasseur", JobType.CHASSEUR, 0, 0, 10));
+        player.getJobs().add(set("Agriculteur", JobType.AGRICULTEUR, 0, 0, 10));
         return jobsOptional.orElse(player);
     }
 
@@ -38,11 +38,8 @@ public class MongoStorage {
         }
     }
 
-    public Job set(String name, int level, double xp){
-        Job job = new Job();
-        job.setJobName(name);
-        job.setXp(xp);
-        job.setCurrentLvl(level);
+    public Job set(String name, JobType jobType, double xp, int level, int maxLevel) {
+        Job job = new Job(name, jobType, xp, level, maxLevel);
         return job;
     }
 }

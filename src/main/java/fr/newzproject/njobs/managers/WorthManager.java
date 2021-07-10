@@ -1,24 +1,34 @@
-package fr.newzproject.njobs;
+package fr.newzproject.njobs.managers;
 
+import fr.newzproject.njobs.JobsCore;
+import fr.newzproject.njobs.jobs.Job;
 import fr.newzproject.njobs.jobs.JobType;
-import fr.newzproject.njobs.jobs.JobsXPManager;
 import fr.newzproject.njobs.utils.compatibility.CompatibleMaterial;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Config {
+public class WorthManager {
+    private static WorthManager instance;
+
+    private final Map<CompatibleMaterial, Map<JobType, Double>> materialWorth = new HashMap<>();
+    private final Map<EntityType, Map<JobType, Double>> entityWorth = new HashMap<>();
+
     private final FileConfiguration fileConfiguration;
 
-    public Config() {
+    private WorthManager() {
+        instance = this;
         File file = new File("plugins/nJobs", "worth.yml");
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
     }
 
     public void initWorth() {
-        JobsXPManager experienceManager = JobsXPManager.getInstance();
+        WorthManager experienceManager = WorthManager.getInstance();
 
         System.out.println("============ nJobs - Worth File ============");
         for (String key : fileConfiguration.getKeys(true)) {
@@ -63,5 +73,35 @@ public class Config {
 
     private int getXP(String job, String name) {
         return fileConfiguration.getInt(job + "." + name + ".xp");
+    }
+
+
+    public void addMaterialWorth(CompatibleMaterial compatibleMaterial, JobType type, double xp) {
+        materialWorth.computeIfAbsent(compatibleMaterial, material -> new HashMap<>()).put(type, xp);
+    }
+
+
+    public void addEntityTypeWorth(EntityType entityType, JobType type, double xp) {
+        entityWorth.computeIfAbsent(entityType, entity -> new HashMap<>()).put(type, xp);
+    }
+
+    public Collection<JobType> getJobType(CompatibleMaterial compatibleMaterial) {
+        return materialWorth.computeIfAbsent(compatibleMaterial, material -> new HashMap<>()).keySet();
+    }
+
+    public double getMaterialWorth(CompatibleMaterial compatibleMaterial, JobType jobType) {
+        return materialWorth.get(compatibleMaterial).get(jobType);
+    }
+
+    public double getEntityTypeWorth(EntityType entityType, JobType jobType) {
+        return entityWorth.get(entityType).get(jobType);
+    }
+
+    public double getXpForLevelup(JobType jobType, Job job) {
+        return (JobsCore.getInstance().priceBase.get(jobType) * Math.pow(JobsCore.getInstance().priceMulti.get(jobType), job.getLevel()));
+    }
+
+    public static WorthManager getInstance() {
+        return instance == null ? instance = new WorthManager() : instance;
     }
 }
